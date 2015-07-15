@@ -1,0 +1,569 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1703E5BF82A4073A5A55CF5E /* libPods-BCLRemoteApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A05CF94B3F5C7932BDBFBE /* libPods-BCLRemoteApp.a */; };
+		7503CCD91B445C4C00949512 /* AlertControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCD81B445C4C00949512 /* AlertControllerManager.m */; };
+		7503CCE41B445D1400949512 /* BCLUUIDTextFieldFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCDB1B445D1400949512 /* BCLUUIDTextFieldFormatter.m */; };
+		7503CCE51B445D1400949512 /* UIColor+BCLAppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCDD1B445D1400949512 /* UIColor+BCLAppColors.m */; };
+		7503CCE61B445D1400949512 /* UIImage+BeaconMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCDF1B445D1400949512 /* UIImage+BeaconMarker.m */; };
+		7503CCE71B445D1400949512 /* UIViewController+BCLActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCE11B445D1400949512 /* UIViewController+BCLActivityIndicator.m */; };
+		7503CCE81B445D1400949512 /* UIViewController+BCLValidationErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCE31B445D1400949512 /* UIViewController+BCLValidationErrors.m */; };
+		7503CCEE1B445D4400949512 /* BCLZonesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCEA1B445D4400949512 /* BCLZonesTableViewCell.m */; };
+		7503CCEF1B445D4400949512 /* BLCZonesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCEC1B445D4400949512 /* BLCZonesViewController.m */; };
+		7503CCF01B445D4400949512 /* Zones.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7503CCED1B445D4400949512 /* Zones.storyboard */; };
+		7503CCF31B445D5200949512 /* BeaconCtrlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCF21B445D5200949512 /* BeaconCtrlManager.m */; };
+		7503CCFB1B445D9A00949512 /* BCLBeaconDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCF51B445D9A00949512 /* BCLBeaconDetailsViewController.m */; };
+		7503CCFC1B445D9A00949512 /* BCLMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCF71B445D9A00949512 /* BCLMapViewController.m */; };
+		7503CCFD1B445D9A00949512 /* BCLNotificationSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCF91B445D9A00949512 /* BCLNotificationSetupViewController.m */; };
+		7503CCFE1B445D9A00949512 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7503CCFA1B445D9A00949512 /* Main.storyboard */; };
+		7503CD081B445E1A00949512 /* BCLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD001B445E1A00949512 /* BCLContainerViewController.m */; };
+		7503CD091B445E1A00949512 /* BCLLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD021B445E1A00949512 /* BCLLoginViewController.m */; };
+		7503CD0A1B445E1A00949512 /* BCLRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD041B445E1A00949512 /* BCLRegisterViewController.m */; };
+		7503CD0B1B445E1A00949512 /* BCLResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD061B445E1A00949512 /* BCLResetPasswordViewController.m */; };
+		7503CD0C1B445E1A00949512 /* Entry.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD071B445E1A00949512 /* Entry.storyboard */; };
+		7503CD121B445E4300949512 /* BCLSideMenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD0E1B445E4300949512 /* BCLSideMenuTableViewCell.m */; };
+		7503CD131B445E4300949512 /* BCLSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD101B445E4300949512 /* BCLSideMenuViewController.m */; };
+		7503CD141B445E4300949512 /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD111B445E4300949512 /* SideMenu.storyboard */; };
+		7503CD171B445E5800949512 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD161B445E5800949512 /* AppDelegate.m */; };
+		7503CD191B445E6100949512 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD181B445E6100949512 /* Images.xcassets */; };
+		7503CD1B1B445E8800949512 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD1A1B445E8800949512 /* LaunchScreen.xib */; };
+		7503CD1D1B445EF000949512 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD1C1B445EF000949512 /* main.m */; };
+		7503CD1F1B445EF800949512 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD1E1B445EF800949512 /* Info.plist */; };
+		756D536C1B3B0E7B0062F3BB /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 756D536B1B3B0E7B0062F3BB /* LICENSE.txt */; };
+		758A3DA61B050F0700645DE6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758A3DA51B050F0700645DE6 /* MapKit.framework */; };
+		75B113B51B49CFCB00289368 /* BCLChooseTriggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */; };
+		AF6E0DB91B4D580100E07918 /* SystemSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */; };
+		AF6E0DBC1B4D584300E07918 /* BCLSystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */; };
+		AF7B68381B4BFED9004027D7 /* BCLTriggerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		56C198B79D11059B32070109 /* Pods-BCLRemoteApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCLRemoteApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp.release.xcconfig"; sourceTree = "<group>"; };
+		63A05CF94B3F5C7932BDBFBE /* libPods-BCLRemoteApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BCLRemoteApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7503CCD71B445C4C00949512 /* AlertControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlertControllerManager.h; path = BCLRemoteApp/AlertControllerManager/AlertControllerManager.h; sourceTree = SOURCE_ROOT; };
+		7503CCD81B445C4C00949512 /* AlertControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlertControllerManager.m; path = BCLRemoteApp/AlertControllerManager/AlertControllerManager.m; sourceTree = SOURCE_ROOT; };
+		7503CCDA1B445D1400949512 /* BCLUUIDTextFieldFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLUUIDTextFieldFormatter.h; path = BCLRemoteApp/Global/BCLUUIDTextFieldFormatter.h; sourceTree = SOURCE_ROOT; };
+		7503CCDB1B445D1400949512 /* BCLUUIDTextFieldFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLUUIDTextFieldFormatter.m; path = BCLRemoteApp/Global/BCLUUIDTextFieldFormatter.m; sourceTree = SOURCE_ROOT; };
+		7503CCDC1B445D1400949512 /* UIColor+BCLAppColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+BCLAppColors.h"; path = "BCLRemoteApp/Global/UIColor+BCLAppColors.h"; sourceTree = SOURCE_ROOT; };
+		7503CCDD1B445D1400949512 /* UIColor+BCLAppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+BCLAppColors.m"; path = "BCLRemoteApp/Global/UIColor+BCLAppColors.m"; sourceTree = SOURCE_ROOT; };
+		7503CCDE1B445D1400949512 /* UIImage+BeaconMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+BeaconMarker.h"; path = "BCLRemoteApp/Global/UIImage+BeaconMarker.h"; sourceTree = SOURCE_ROOT; };
+		7503CCDF1B445D1400949512 /* UIImage+BeaconMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+BeaconMarker.m"; path = "BCLRemoteApp/Global/UIImage+BeaconMarker.m"; sourceTree = SOURCE_ROOT; };
+		7503CCE01B445D1400949512 /* UIViewController+BCLActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+BCLActivityIndicator.h"; path = "BCLRemoteApp/Global/UIViewController+BCLActivityIndicator.h"; sourceTree = SOURCE_ROOT; };
+		7503CCE11B445D1400949512 /* UIViewController+BCLActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+BCLActivityIndicator.m"; path = "BCLRemoteApp/Global/UIViewController+BCLActivityIndicator.m"; sourceTree = SOURCE_ROOT; };
+		7503CCE21B445D1400949512 /* UIViewController+BCLValidationErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+BCLValidationErrors.h"; path = "BCLRemoteApp/Global/UIViewController+BCLValidationErrors.h"; sourceTree = SOURCE_ROOT; };
+		7503CCE31B445D1400949512 /* UIViewController+BCLValidationErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+BCLValidationErrors.m"; path = "BCLRemoteApp/Global/UIViewController+BCLValidationErrors.m"; sourceTree = SOURCE_ROOT; };
+		7503CCE91B445D4400949512 /* BCLZonesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLZonesTableViewCell.h; path = BCLRemoteApp/Zones/BCLZonesTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		7503CCEA1B445D4400949512 /* BCLZonesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLZonesTableViewCell.m; path = BCLRemoteApp/Zones/BCLZonesTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		7503CCEB1B445D4400949512 /* BLCZonesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCZonesViewController.h; path = BCLRemoteApp/Zones/BLCZonesViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CCEC1B445D4400949512 /* BLCZonesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCZonesViewController.m; path = BCLRemoteApp/Zones/BLCZonesViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CCED1B445D4400949512 /* Zones.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Zones.storyboard; path = BCLRemoteApp/Zones/Zones.storyboard; sourceTree = SOURCE_ROOT; };
+		7503CCF11B445D5200949512 /* BeaconCtrlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconCtrlManager.h; path = BCLRemoteApp/BeaconCtrlManager/BeaconCtrlManager.h; sourceTree = SOURCE_ROOT; };
+		7503CCF21B445D5200949512 /* BeaconCtrlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconCtrlManager.m; path = BCLRemoteApp/BeaconCtrlManager/BeaconCtrlManager.m; sourceTree = SOURCE_ROOT; };
+		7503CCF41B445D9A00949512 /* BCLBeaconDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLBeaconDetailsViewController.h; path = BCLRemoteApp/Main/BCLBeaconDetailsViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CCF51B445D9A00949512 /* BCLBeaconDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLBeaconDetailsViewController.m; path = BCLRemoteApp/Main/BCLBeaconDetailsViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CCF61B445D9A00949512 /* BCLMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLMapViewController.h; path = BCLRemoteApp/Main/BCLMapViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CCF71B445D9A00949512 /* BCLMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLMapViewController.m; path = BCLRemoteApp/Main/BCLMapViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CCF81B445D9A00949512 /* BCLNotificationSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLNotificationSetupViewController.h; path = BCLRemoteApp/Main/BCLNotificationSetupViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CCF91B445D9A00949512 /* BCLNotificationSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLNotificationSetupViewController.m; path = BCLRemoteApp/Main/BCLNotificationSetupViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CCFA1B445D9A00949512 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = BCLRemoteApp/Main/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		7503CCFF1B445E1A00949512 /* BCLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLContainerViewController.h; path = BCLRemoteApp/Entry/BCLContainerViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CD001B445E1A00949512 /* BCLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLContainerViewController.m; path = BCLRemoteApp/Entry/BCLContainerViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CD011B445E1A00949512 /* BCLLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLLoginViewController.h; path = BCLRemoteApp/Entry/BCLLoginViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CD021B445E1A00949512 /* BCLLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLLoginViewController.m; path = BCLRemoteApp/Entry/BCLLoginViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CD031B445E1A00949512 /* BCLRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLRegisterViewController.h; path = BCLRemoteApp/Entry/BCLRegisterViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CD041B445E1A00949512 /* BCLRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLRegisterViewController.m; path = BCLRemoteApp/Entry/BCLRegisterViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CD051B445E1A00949512 /* BCLResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLResetPasswordViewController.h; path = BCLRemoteApp/Entry/BCLResetPasswordViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CD061B445E1A00949512 /* BCLResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLResetPasswordViewController.m; path = BCLRemoteApp/Entry/BCLResetPasswordViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CD071B445E1A00949512 /* Entry.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Entry.storyboard; path = BCLRemoteApp/Entry/Entry.storyboard; sourceTree = SOURCE_ROOT; };
+		7503CD0D1B445E4300949512 /* BCLSideMenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLSideMenuTableViewCell.h; path = BCLRemoteApp/SideMenu/BCLSideMenuTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		7503CD0E1B445E4300949512 /* BCLSideMenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLSideMenuTableViewCell.m; path = BCLRemoteApp/SideMenu/BCLSideMenuTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		7503CD0F1B445E4300949512 /* BCLSideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLSideMenuViewController.h; path = BCLRemoteApp/SideMenu/BCLSideMenuViewController.h; sourceTree = SOURCE_ROOT; };
+		7503CD101B445E4300949512 /* BCLSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLSideMenuViewController.m; path = BCLRemoteApp/SideMenu/BCLSideMenuViewController.m; sourceTree = SOURCE_ROOT; };
+		7503CD111B445E4300949512 /* SideMenu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SideMenu.storyboard; path = BCLRemoteApp/SideMenu/SideMenu.storyboard; sourceTree = SOURCE_ROOT; };
+		7503CD151B445E5300949512 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BCLRemoteApp/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		7503CD161B445E5800949512 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = BCLRemoteApp/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		7503CD181B445E6100949512 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BCLRemoteApp/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		7503CD1A1B445E8800949512 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = BCLRemoteApp/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
+		7503CD1C1B445EF000949512 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BCLRemoteApp/main.m; sourceTree = SOURCE_ROOT; };
+		7503CD1E1B445EF800949512 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BCLRemoteApp/Info.plist; sourceTree = SOURCE_ROOT; };
+		756D536B1B3B0E7B0062F3BB /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		758A3DA51B050F0700645DE6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		75B113B31B49CFCB00289368 /* BCLChooseTriggerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLChooseTriggerViewController.h; path = BCLRemoteApp/Main/BCLChooseTriggerViewController.h; sourceTree = SOURCE_ROOT; };
+		75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLChooseTriggerViewController.m; path = BCLRemoteApp/Main/BCLChooseTriggerViewController.m; sourceTree = SOURCE_ROOT; };
+		9D314D2116E5D7F0F6A46696 /* Pods-BCLRemoteApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCLRemoteApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemSettingsViewController.xib; sourceTree = SOURCE_ROOT; };
+		AF6E0DBA1B4D584300E07918 /* BCLSystemSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLSystemSettingsViewController.h; path = BCLRemoteApp/Global/BCLSystemSettingsViewController.h; sourceTree = SOURCE_ROOT; };
+		AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLSystemSettingsViewController.m; path = BCLRemoteApp/Global/BCLSystemSettingsViewController.m; sourceTree = SOURCE_ROOT; };
+		AF7A1A4E1AF7ACAD0091DFF7 /* BCLRemoteApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCLRemoteApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF7B68361B4BFED9004027D7 /* BCLTriggerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLTriggerTableViewCell.h; path = BCLRemoteApp/Main/BCLTriggerTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLTriggerTableViewCell.m; path = BCLRemoteApp/Main/BCLTriggerTableViewCell.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AF7A1A4B1AF7ACAD0091DFF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				758A3DA61B050F0700645DE6 /* MapKit.framework in Frameworks */,
+				1703E5BF82A4073A5A55CF5E /* libPods-BCLRemoteApp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		40B5BE981B0D235D0056A9EF /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				7503CCDA1B445D1400949512 /* BCLUUIDTextFieldFormatter.h */,
+				7503CCDB1B445D1400949512 /* BCLUUIDTextFieldFormatter.m */,
+				7503CCDC1B445D1400949512 /* UIColor+BCLAppColors.h */,
+				7503CCDD1B445D1400949512 /* UIColor+BCLAppColors.m */,
+				7503CCDE1B445D1400949512 /* UIImage+BeaconMarker.h */,
+				7503CCDF1B445D1400949512 /* UIImage+BeaconMarker.m */,
+				7503CCE01B445D1400949512 /* UIViewController+BCLActivityIndicator.h */,
+				7503CCE11B445D1400949512 /* UIViewController+BCLActivityIndicator.m */,
+				7503CCE21B445D1400949512 /* UIViewController+BCLValidationErrors.h */,
+				7503CCE31B445D1400949512 /* UIViewController+BCLValidationErrors.m */,
+				AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */,
+				AF6E0DBA1B4D584300E07918 /* BCLSystemSettingsViewController.h */,
+				AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */,
+			);
+			name = Global;
+			sourceTree = "<group>";
+		};
+		751F9CCF1B0F906000E35369 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				7503CCD71B445C4C00949512 /* AlertControllerManager.h */,
+				7503CCD81B445C4C00949512 /* AlertControllerManager.m */,
+			);
+			name = Alerts;
+			sourceTree = "<group>";
+		};
+		75B3A8791AFB958C00DBF5D5 /* BeaconCtrlManager */ = {
+			isa = PBXGroup;
+			children = (
+				7503CCF11B445D5200949512 /* BeaconCtrlManager.h */,
+				7503CCF21B445D5200949512 /* BeaconCtrlManager.m */,
+			);
+			name = BeaconCtrlManager;
+			sourceTree = "<group>";
+		};
+		7C61F7521B0B66FB0069F829 /* Zones */ = {
+			isa = PBXGroup;
+			children = (
+				7503CCE91B445D4400949512 /* BCLZonesTableViewCell.h */,
+				7503CCEA1B445D4400949512 /* BCLZonesTableViewCell.m */,
+				7503CCEB1B445D4400949512 /* BLCZonesViewController.h */,
+				7503CCEC1B445D4400949512 /* BLCZonesViewController.m */,
+				7503CCED1B445D4400949512 /* Zones.storyboard */,
+			);
+			name = Zones;
+			sourceTree = "<group>";
+		};
+		AF7A1A451AF7ACAC0091DFF7 = {
+			isa = PBXGroup;
+			children = (
+				756D536B1B3B0E7B0062F3BB /* LICENSE.txt */,
+				AF7A1A501AF7ACAD0091DFF7 /* BCLRemoteApp */,
+				AF7A1A4F1AF7ACAD0091DFF7 /* Products */,
+				C1E1F161AA63A82D4B7FD9A2 /* Pods */,
+				E3DA17A4ECFC119F1C3FD3A9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AF7A1A4F1AF7ACAD0091DFF7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF7A1A4E1AF7ACAD0091DFF7 /* BCLRemoteApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AF7A1A501AF7ACAD0091DFF7 /* BCLRemoteApp */ = {
+			isa = PBXGroup;
+			children = (
+				751F9CCF1B0F906000E35369 /* Alerts */,
+				40B5BE981B0D235D0056A9EF /* Global */,
+				7C61F7521B0B66FB0069F829 /* Zones */,
+				75B3A8791AFB958C00DBF5D5 /* BeaconCtrlManager */,
+				AFF5D9AE1AFCC68B000E4CEA /* Main */,
+				AFF5D9AD1AFCC660000E4CEA /* Entry */,
+				AFF5D9AC1AFCC62F000E4CEA /* SideMenu */,
+				7503CD151B445E5300949512 /* AppDelegate.h */,
+				7503CD161B445E5800949512 /* AppDelegate.m */,
+				7503CD1A1B445E8800949512 /* LaunchScreen.xib */,
+				7503CD181B445E6100949512 /* Images.xcassets */,
+				AF7A1A511AF7ACAD0091DFF7 /* Supporting Files */,
+			);
+			name = BCLRemoteApp;
+			path = BOSRemoteApp;
+			sourceTree = "<group>";
+		};
+		AF7A1A511AF7ACAD0091DFF7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7503CD1C1B445EF000949512 /* main.m */,
+				7503CD1E1B445EF800949512 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AFF5D9AC1AFCC62F000E4CEA /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				7503CD0D1B445E4300949512 /* BCLSideMenuTableViewCell.h */,
+				7503CD0E1B445E4300949512 /* BCLSideMenuTableViewCell.m */,
+				7503CD0F1B445E4300949512 /* BCLSideMenuViewController.h */,
+				7503CD101B445E4300949512 /* BCLSideMenuViewController.m */,
+				7503CD111B445E4300949512 /* SideMenu.storyboard */,
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
+		AFF5D9AD1AFCC660000E4CEA /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				7503CCFF1B445E1A00949512 /* BCLContainerViewController.h */,
+				7503CD001B445E1A00949512 /* BCLContainerViewController.m */,
+				7503CD011B445E1A00949512 /* BCLLoginViewController.h */,
+				7503CD021B445E1A00949512 /* BCLLoginViewController.m */,
+				7503CD031B445E1A00949512 /* BCLRegisterViewController.h */,
+				7503CD041B445E1A00949512 /* BCLRegisterViewController.m */,
+				7503CD051B445E1A00949512 /* BCLResetPasswordViewController.h */,
+				7503CD061B445E1A00949512 /* BCLResetPasswordViewController.m */,
+				7503CD071B445E1A00949512 /* Entry.storyboard */,
+			);
+			name = Entry;
+			sourceTree = "<group>";
+		};
+		AFF5D9AE1AFCC68B000E4CEA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				7503CCF41B445D9A00949512 /* BCLBeaconDetailsViewController.h */,
+				7503CCF51B445D9A00949512 /* BCLBeaconDetailsViewController.m */,
+				7503CCF61B445D9A00949512 /* BCLMapViewController.h */,
+				7503CCF71B445D9A00949512 /* BCLMapViewController.m */,
+				7503CCF81B445D9A00949512 /* BCLNotificationSetupViewController.h */,
+				7503CCF91B445D9A00949512 /* BCLNotificationSetupViewController.m */,
+				7503CCFA1B445D9A00949512 /* Main.storyboard */,
+				75B113B31B49CFCB00289368 /* BCLChooseTriggerViewController.h */,
+				75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */,
+				AF7B68361B4BFED9004027D7 /* BCLTriggerTableViewCell.h */,
+				AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		C1E1F161AA63A82D4B7FD9A2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9D314D2116E5D7F0F6A46696 /* Pods-BCLRemoteApp.debug.xcconfig */,
+				56C198B79D11059B32070109 /* Pods-BCLRemoteApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E3DA17A4ECFC119F1C3FD3A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				758A3DA51B050F0700645DE6 /* MapKit.framework */,
+				63A05CF94B3F5C7932BDBFBE /* libPods-BCLRemoteApp.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AF7A1A4D1AF7ACAD0091DFF7 /* BCLRemoteApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF7A1A741AF7ACAD0091DFF7 /* Build configuration list for PBXNativeTarget "BCLRemoteApp" */;
+			buildPhases = (
+				A4167EA327499F3735B077DF /* Check Pods Manifest.lock */,
+				AF7A1A4A1AF7ACAD0091DFF7 /* Sources */,
+				AF7A1A4B1AF7ACAD0091DFF7 /* Frameworks */,
+				AF7A1A4C1AF7ACAD0091DFF7 /* Resources */,
+				030E5AAB9789D09E3D9A2C5F /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BCLRemoteApp;
+			productName = BOSRemoteApp;
+			productReference = AF7A1A4E1AF7ACAD0091DFF7 /* BCLRemoteApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AF7A1A461AF7ACAC0091DFF7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BCL;
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = UpNext;
+				TargetAttributes = {
+					AF7A1A4D1AF7ACAD0091DFF7 = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 8TQGM4U3PU;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = AF7A1A491AF7ACAC0091DFF7 /* Build configuration list for PBXProject "BCLRemoteApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AF7A1A451AF7ACAC0091DFF7;
+			productRefGroup = AF7A1A4F1AF7ACAD0091DFF7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AF7A1A4D1AF7ACAD0091DFF7 /* BCLRemoteApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AF7A1A4C1AF7ACAD0091DFF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7503CD1F1B445EF800949512 /* Info.plist in Resources */,
+				7503CD0C1B445E1A00949512 /* Entry.storyboard in Resources */,
+				7503CD191B445E6100949512 /* Images.xcassets in Resources */,
+				7503CCFE1B445D9A00949512 /* Main.storyboard in Resources */,
+				AF6E0DB91B4D580100E07918 /* SystemSettingsViewController.xib in Resources */,
+				7503CCF01B445D4400949512 /* Zones.storyboard in Resources */,
+				7503CD1B1B445E8800949512 /* LaunchScreen.xib in Resources */,
+				756D536C1B3B0E7B0062F3BB /* LICENSE.txt in Resources */,
+				7503CD141B445E4300949512 /* SideMenu.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		030E5AAB9789D09E3D9A2C5F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4167EA327499F3735B077DF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AF7A1A4A1AF7ACAD0091DFF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7503CCD91B445C4C00949512 /* AlertControllerManager.m in Sources */,
+				7503CCFB1B445D9A00949512 /* BCLBeaconDetailsViewController.m in Sources */,
+				AF7B68381B4BFED9004027D7 /* BCLTriggerTableViewCell.m in Sources */,
+				7503CD0B1B445E1A00949512 /* BCLResetPasswordViewController.m in Sources */,
+				7503CD0A1B445E1A00949512 /* BCLRegisterViewController.m in Sources */,
+				7503CCEE1B445D4400949512 /* BCLZonesTableViewCell.m in Sources */,
+				7503CCE51B445D1400949512 /* UIColor+BCLAppColors.m in Sources */,
+				7503CCE61B445D1400949512 /* UIImage+BeaconMarker.m in Sources */,
+				7503CD121B445E4300949512 /* BCLSideMenuTableViewCell.m in Sources */,
+				75B113B51B49CFCB00289368 /* BCLChooseTriggerViewController.m in Sources */,
+				7503CCE41B445D1400949512 /* BCLUUIDTextFieldFormatter.m in Sources */,
+				7503CCE81B445D1400949512 /* UIViewController+BCLValidationErrors.m in Sources */,
+				7503CD131B445E4300949512 /* BCLSideMenuViewController.m in Sources */,
+				7503CCF31B445D5200949512 /* BeaconCtrlManager.m in Sources */,
+				7503CD091B445E1A00949512 /* BCLLoginViewController.m in Sources */,
+				7503CCFD1B445D9A00949512 /* BCLNotificationSetupViewController.m in Sources */,
+				7503CCEF1B445D4400949512 /* BLCZonesViewController.m in Sources */,
+				7503CCFC1B445D9A00949512 /* BCLMapViewController.m in Sources */,
+				7503CD081B445E1A00949512 /* BCLContainerViewController.m in Sources */,
+				AF6E0DBC1B4D584300E07918 /* BCLSystemSettingsViewController.m in Sources */,
+				7503CCE71B445D1400949512 /* UIViewController+BCLActivityIndicator.m in Sources */,
+				7503CD1D1B445EF000949512 /* main.m in Sources */,
+				7503CD171B445E5800949512 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AF7A1A721AF7ACAD0091DFF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AF7A1A731AF7ACAD0091DFF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AF7A1A751AF7ACAD0091DFF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D314D2116E5D7F0F6A46696 /* Pods-BCLRemoteApp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/BCLRemoteApp/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = BCLRemoteApp;
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		AF7A1A761AF7ACAD0091DFF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56C198B79D11059B32070109 /* Pods-BCLRemoteApp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/BCLRemoteApp/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = BCLRemoteApp;
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF7A1A491AF7ACAC0091DFF7 /* Build configuration list for PBXProject "BCLRemoteApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF7A1A721AF7ACAD0091DFF7 /* Debug */,
+				AF7A1A731AF7ACAD0091DFF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF7A1A741AF7ACAD0091DFF7 /* Build configuration list for PBXNativeTarget "BCLRemoteApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF7A1A751AF7ACAD0091DFF7 /* Debug */,
+				AF7A1A761AF7ACAD0091DFF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AF7A1A461AF7ACAC0091DFF7 /* Project object */;
+}

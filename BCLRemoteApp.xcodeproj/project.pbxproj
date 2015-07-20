@@ -314,7 +314,7 @@
 				TargetAttributes = {
 					AF7A1A4D1AF7ACAD0091DFF7 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 8TQGM4U3PU;
+						DevelopmentTeam = WWKF65T5X4;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -522,7 +522,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = BCLRemoteApp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "290590bb-8cd6-455b-8dec-a0e19a2179c5";
 			};
 			name = Debug;
 		};
@@ -532,13 +532,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Upnext Technologies sp. z o.o. (WWKF65T5X4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Upnext Technologies sp. z o.o. (WWKF65T5X4)";
 				INFOPLIST_FILE = "$(SRCROOT)/BCLRemoteApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = BCLRemoteApp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6ffba08d-14c6-44de-a1b2-21eefd5d1b51";
 			};
 			name = Release;
 		};

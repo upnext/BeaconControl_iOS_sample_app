@@ -6,9 +6,8 @@ source 'ssh://git@stash.up-next.com:7999/upnext/cocoapods-specs.git'
 
 target 'BCLRemoteApp' do
 	pod "UNNetworking", :git => "ssh://git@stash.up-next.com:7999/var/unnetworking.git", :branch => :master
-	pod "BeaconCtrl", :path => '../bp-ios-sdk', :branch => :opensource
-	#pod "BeaconCtrl", :git => "ssh://git@stash.up-next.com:7999/bp/bp-ios-sdk.git", :branch => :opensource
 	pod 'Mapbox-iOS-SDK', '1.6.0'
+	pod 'BeaconCtrl', :git => "https://github.com/upnext/BeaconCtrl_iOS_SDK.git", :branch => :master
 	pod 'SSKeychain'
 	pod 'AKPickerView'
     pod 'MFSideMenu'

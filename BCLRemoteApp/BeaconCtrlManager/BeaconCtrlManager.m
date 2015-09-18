@@ -70,7 +70,7 @@ NSString * const BeaconManagerCurrentZoneDidChangeNotification = @"BeaconManager
 
 - (void)setupForExistingAdminUserWithEmail:(NSString *)email password:(NSString *)password completion:(void (^)(BOOL, NSError *))completion
 {
-    self.beaconCtrlAdmin = [BCLBeaconCtrlAdmin beaconCtrlAdminWithCliendId:@"5dbb219a34e6567b2e85b04b46679916dba9d16c2a85c40eafc497b00a7a88d5" clientSecret:@"439039bb5b2ec02541a204b2eb80cd49ec92986a19745569203fd38468b788db"];
+    self.beaconCtrlAdmin = [BCLBeaconCtrlAdmin beaconCtrlAdminWithCliendId:@"76b8780413c3902d76ae7a05b9a17dcb04ed0696147696d3b4ff3302269efc32" clientSecret:@"55f560c85ce5e645c928eb72537a1183b87b947d9d4129a8786c10f6bff3613b"];
     
     __weak typeof(self) weakSelf = self;
     

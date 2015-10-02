@@ -18,6 +18,11 @@ extern NSString * const BeaconManagerDidLogoutNotification;
 extern NSString * const BeaconManagerDidFetchBeaconCtrlConfigurationNotification;
 extern NSString * const BeaconManagerClosestBeaconDidChangeNotification;
 extern NSString * const BeaconManagerCurrentZoneDidChangeNotification;
+extern NSString * const BeaconManagerPropertiesUpdateDidStartNotification;
+extern NSString * const BeaconManagerPropertiesUpdateDidFinishNotification;
+extern NSString * const BeaconManagerFirmwareUpdateDidStartNotification;
+extern NSString * const BeaconManagerFirmwareUpdateDidProgressNotification;
+extern NSString * const BeaconManagerFirmwareUpdateDidFinishNotification;
 
 @interface BeaconCtrlManager : NSObject
 

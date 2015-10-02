@@ -21,6 +21,11 @@ NSString * const BeaconManagerDidLogoutNotification = @"BeaconManagerDidLogoutpN
 NSString * const BeaconManagerDidFetchBeaconCtrlConfigurationNotification = @"BeaconManagerDidFetchBeaconCtrlConfigurationNotification";
 NSString * const BeaconManagerClosestBeaconDidChangeNotification = @"BeaconManagerClosestBeaconDidChangeNotification";
 NSString * const BeaconManagerCurrentZoneDidChangeNotification = @"BeaconManagerCurrentZoneDidChangeNotification";
+NSString * const BeaconManagerPropertiesUpdateDidStartNotification = @"BeaconManagerPropertiesUpdateDidStartNotification";
+NSString * const BeaconManagerPropertiesUpdateDidFinishNotification = @"BeaconManagerPropertiesUpdateDidFinishNotification";
+NSString * const BeaconManagerFirmwareUpdateDidStartNotification = @"BeaconManagerFirmwareUpdateDidStartNotification";
+NSString * const BeaconManagerFirmwareUpdateDidProgressNotification = @"BeaconManagerFirmwareUpdateDidProgresstNotification";
+NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconManagerFirmwareUpdateDidFinishNotification";
 
 @interface BeaconCtrlManager () <BCLBeaconCtrlDelegate>
 
@@ -370,6 +375,31 @@ NSString * const BeaconManagerCurrentZoneDidChangeNotification = @"BeaconManager
 - (void) didPerformAction:(BCLAction *)action
 {
     [self presentTestNotification:action];
+}
+
+- (void)beaconsPropertiesUpdateDidStart:(BCLBeacon *)beacon
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerPropertiesUpdateDidStartNotification object:self userInfo:@{@"beacon": beacon}];
+}
+
+- (void)beaconsPropertiesUpdateDidFinish:(BCLBeacon *)beacon success:(BOOL)success
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerPropertiesUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(success)}];
+}
+
+- (void)beaconsFirmwareUpdateDidStart:(BCLBeacon *)beacon
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerFirmwareUpdateDidStartNotification object:self userInfo:@{@"beacon": beacon}];
+}
+
+- (void)beaconsFirmwareUpdateDidProgress:(BCLBeacon *)beacon progress:(NSUInteger)progress
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerFirmwareUpdateDidProgressNotification object:self userInfo:@{@"beacon": beacon, @"progress": @(progress)}];
+}
+
+- (void)beaconsFirmwareUpdateDidFinish:(BCLBeacon *)beacon success:(BOOL)success
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerFirmwareUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(success)}];
 }
 
 #pragma mark - Private

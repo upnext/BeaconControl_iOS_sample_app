@@ -17,6 +17,7 @@
 #import "AlertControllerManager.h"
 #import "UIViewController+BCLActivityIndicator.h"
 #import "UIViewController+MFSideMenuAdditions.h"
+#import "UIViewController+BCLValidationErrors.h"
 #import "AppDelegate.h"
 #import <Mapbox-iOS-SDK/Mapbox.h>
 #import <MFSideMenu/MFSideMenuContainerViewController.h>
@@ -377,9 +378,19 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
                 [self centerCurrentlySelectedAnnotationAnimated:YES];
                 BCLBeacon *beacon = annotation.userInfo;
                 if (beacon.zone) {
-                    annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:YES]];
+                    annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:YES needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
                 } else {
                     annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"beaconWithoutZonePressed"]];
+                }
+                
+                if (beacon.characteristicsAreBeingUpdated) {
+                    [self presentValidationError:@"Updating beacon's properties..." completion:nil];
+                } else if (beacon.needsCharacteristicsUpdate) {
+                    [self presentValidationError:@"This beacon needs to have its properties updated. Move closer to it and wait for a while" completion:nil];
+                } else if (beacon.needsFirmwareUpdate) {
+                    [self presentValidationError:@"This beacon needs to have its firmware updated. Move closer to it and wait for a while" completion:nil];
+                } else if (beacon.firmwareUpdateProgress > 0 && beacon.firmwareUpdateProgress != NSNotFound) {
+                    [self presentValidationError:@"This beacon's firmware is being updated" completion:nil];
                 }
             };
                 break;
@@ -495,12 +506,12 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     
     RMMarker *marker;
     if (annotation == mapView.selectedAnnotation) {
-        marker = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:[UIColor redColor] highlighted:NO]];
+        marker = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:[UIColor redColor] highlighted:NO needsUpdate:YES]];
     } else {
         if (beacon.zone.color) {
-            marker = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO]];
+            marker = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
         } else {
-            marker = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"beaconWithoutZone"]];
+            marker = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:beacon.needsFirmwareUpdate || beacon.needsFirmwareUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"]];
         }
     }
     return marker;
@@ -518,9 +529,9 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     if (![annotation isKindOfClass:[RMUserLocation class]]) {
         BCLBeacon *beacon = annotation.userInfo;
         if (beacon.zone.color) {
-            annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO]];
+            annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
         } else {
-            annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"beaconWithoutZone"]];
+            annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:beacon.needsFirmwareUpdate || beacon.needsFirmwareUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"]];
         }
 
         if (self.state == kBCLMapViewControllerStateNewBeacon) {

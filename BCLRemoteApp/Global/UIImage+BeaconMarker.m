@@ -13,11 +13,11 @@
 
 @implementation UIImage (BeaconMarker)
 
-+ (UIImage *)beaconMarkerWithColor:(UIColor *)color highlighted:(BOOL)highlighted
++ (UIImage *)beaconMarkerWithColor:(UIColor *)color highlighted:(BOOL)highlighted needsUpdate:(BOOL)needsUpdate
 {
     // load the image
     UIImage *image = [UIImage imageNamed:highlighted ? @"marker_highlighted" : @"beacon"];
-    UIImage *backgroundImage = [UIImage imageNamed:@"beaconBackground"];
+    UIImage *backgroundImage = [UIImage imageNamed:needsUpdate ?  @"beaconBackgroundRed" : @"beaconBackground"];
 
     UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
     CGContextRef context = UIGraphicsGetCurrentContext();

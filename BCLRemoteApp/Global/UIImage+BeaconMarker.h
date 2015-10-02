@@ -13,6 +13,6 @@
 
 @interface UIImage (BeaconMarker)
 
-+ (UIImage *)beaconMarkerWithColor:(UIColor *)color highlighted:(BOOL)highlighted;
++ (UIImage *)beaconMarkerWithColor:(UIColor *)color highlighted:(BOOL)highlighted needsUpdate:(BOOL)needsUpdate;
 
 @end

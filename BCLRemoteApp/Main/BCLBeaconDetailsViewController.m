@@ -51,8 +51,13 @@
 @property (nonatomic) NSNumber *selectedFloor;
 @property (nonatomic) NSString *notificationMessage;
 @property (nonatomic) BCLEventType selectedTrigger;
+
+@property (nonatomic) NSArray *editableTextFieldsBackgrounds;
+
 @property(nonatomic, strong) BCLUUIDTextFieldFormatter *uuidFormatter;
 @end
+
+static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
 @implementation BCLBeaconDetailsViewController
 
@@ -84,6 +89,8 @@
     
     self.uuidFormatter = [BCLUUIDTextFieldFormatter new];
     self.uuidFormatter.textField = self.uuidTextField;
+
+    [self setEditingEnabled:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -579,6 +586,11 @@
 
 - (void)setEditingEnabled:(BOOL)enabled
 {
+    [self setEditingEnabled:enabled animated:NO];
+}
+
+- (void)setEditingEnabled:(BOOL)enabled animated:(BOOL)animated
+{
     self.zonesDisclosureIndicatorImage.hidden = !enabled;
     self.notificationsDisclosureIndicatorImage.hidden = !enabled;
     self.minorTextField.enabled = enabled;
@@ -589,6 +601,37 @@
     self.uuidTextField.enabled = enabled;
     self.zoneButton.userInteractionEnabled = enabled;
     self.notificationsButton.userInteractionEnabled = enabled;
+    [self setEditableTextFieldBackgroundsVisible:enabled animated:animated];
+}
+
+- (void)setEditableTextFieldBackgroundsVisible:(BOOL)visible
+{
+    [self setEditableTextFieldBackgroundsVisible:visible animated:NO];
+}
+
+- (void)setEditableTextFieldBackgroundsVisible:(BOOL)visible animated:(BOOL)animated
+{
+    for (UIView *view in self.editableTextFieldsBackgrounds) {
+        [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+            view.backgroundColor = [view.backgroundColor colorWithAlphaComponent:visible];
+        }];
+    }
+}
+
+- (NSArray *)editableTextFieldsBackgrounds
+{
+    if (!_editableTextFieldsBackgrounds) {
+        NSMutableArray *mutableArray = [NSMutableArray new];
+        [self.scrollView.subviews[0].subviews enumerateObjectsUsingBlock:^(UIView * view, NSUInteger idx, BOOL *stop) {
+            if (view.tag == BCLEditableTextFieldBGTag) {
+                [mutableArray addObject:view];
+            }
+        }];
+
+        _editableTextFieldsBackgrounds = [mutableArray copy];
+    }
+
+    return _editableTextFieldsBackgrounds;
 }
 
 - (BeaconCtrlManager *)bclManager

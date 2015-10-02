@@ -34,7 +34,6 @@
 		7503CD191B445E6100949512 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD181B445E6100949512 /* Images.xcassets */; };
 		7503CD1B1B445E8800949512 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD1A1B445E8800949512 /* LaunchScreen.xib */; };
 		7503CD1D1B445EF000949512 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CD1C1B445EF000949512 /* main.m */; };
-		7503CD1F1B445EF800949512 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7503CD1E1B445EF800949512 /* Info.plist */; };
 		756D536C1B3B0E7B0062F3BB /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 756D536B1B3B0E7B0062F3BB /* LICENSE.txt */; };
 		758A3DA61B050F0700645DE6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758A3DA51B050F0700645DE6 /* MapKit.framework */; };
 		75B113B51B49CFCB00289368 /* BCLChooseTriggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */; };
@@ -309,12 +308,12 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = BCL;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = UpNext;
 				TargetAttributes = {
 					AF7A1A4D1AF7ACAD0091DFF7 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = WWKF65T5X4;
+						DevelopmentTeam = 8TQGM4U3PU;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -349,7 +348,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7503CD1F1B445EF800949512 /* Info.plist in Resources */,
 				7503CD0C1B445E1A00949512 /* Entry.storyboard in Resources */,
 				7503CD191B445E6100949512 /* Images.xcassets in Resources */,
 				7503CCFE1B445D9A00949512 /* Main.storyboard in Resources */,
@@ -451,6 +449,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -522,6 +521,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/BCLRemoteApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.upnext.beaconctrl;
 				PRODUCT_NAME = BCLRemoteApp;
 				PROVISIONING_PROFILE = "";
 			};
@@ -533,12 +533,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Upnext Technologies sp. z o.o. (WWKF65T5X4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Upnext Technologies sp. z o.o. (WWKF65T5X4)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/BCLRemoteApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.upnext.beaconctrl;
 				PRODUCT_NAME = BCLRemoteApp;
 				PROVISIONING_PROFILE = "6ffba08d-14c6-44de-a1b2-21eefd5d1b51";
 			};

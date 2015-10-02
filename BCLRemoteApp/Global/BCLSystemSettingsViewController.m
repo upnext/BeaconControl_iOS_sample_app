@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureWithError:self.error];
-    if ([UIScreen mainScreen].bounds.size.width <=320) {
+    if ([UIScreen mainScreen].bounds.size.width <= 320) {
         self.bgAppRefreshLabel.text = @"Background App Refresh";
     }
 }
@@ -51,7 +51,6 @@
 {
     UIImage *noImage = [UIImage imageNamed:@"settingsview_x"];
     UIImage *yesImage = [UIImage imageNamed:@"settingsview_check"];
-
 
     if (error.userInfo[BCLDeniedMonitoringErrorKey]) {
         self.label.text = error.userInfo[BCLDeniedMonitoringErrorKey];

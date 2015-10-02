@@ -86,7 +86,7 @@ NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotificati
 
 - (void)verifySystemSettings
 {
-//#if (!TARGET_IPHONE_SIMULATOR)
+#if (!TARGET_IPHONE_SIMULATOR)
     NSError *error;
     if (![[BeaconCtrlManager sharedManager].beaconCtrl isBeaconCtrlReadyToProcessBeaconActions:&error]) {
         if ([self.window.rootViewController.presentedViewController isKindOfClass:[BCLSystemSettingsViewController class]]) {
@@ -101,7 +101,7 @@ NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotificati
             [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
         }
     }
-//#endif
+#endif
 }
 
 #pragma mark - CLLocationManagerDelegate

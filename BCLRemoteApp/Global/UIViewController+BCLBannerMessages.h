@@ -15,7 +15,7 @@
 
 - (void)presentValidationError:(NSString *)errorMessage completion:(void(^)(BOOL))completion;
 
-- (void)presentMessage:(NSString *)message animated:(BOOL)animated completion:(void(^)(BOOL))completion;
+- (void)presentMessage:(NSString *)message animated:(BOOL)animated warning:(BOOL)isWarning completion:(void(^)(BOOL))completion;
 
 - (void)hideBannerView:(BOOL)animated;
 

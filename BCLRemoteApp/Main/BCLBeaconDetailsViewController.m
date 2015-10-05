@@ -168,34 +168,34 @@
 
 - (void)propertiesUpdateDidStart:(NSNotification *)notification
 {
-    [self showUpdateMessage:@"Updating properties..."];
+    [self showUpdateMessage:@"Updating properties..." warning:YES];
 }
 
 - (void)propertiesUpdateDidEnd:(NSNotification *)notification
 {
-    [self showUpdateMessage:@"Properties succesfully updated!"];
+    [self showUpdateMessage:@"Properties succesfully updated!" warning:NO];
 }
 
 - (void)firmwareUpdateDidStart:(NSNotification *)notification
 {
-    [self showUpdateMessage:@"Updating firmware..."];
+    [self showUpdateMessage:@"Updating firmware..." warning:YES];
 }
 
 - (void)firmwareUpdateDidProgress:(NSNotification *)notification
 {
-    [self showUpdateMessage:[NSString stringWithFormat:@"Firwmare update progress: %@%%", notification.userInfo[@"progress"]]];
+    [self showUpdateMessage:[NSString stringWithFormat:@"Firwmare update progress: %@%%", notification.userInfo[@"progress"]] warning:YES];
 }
 
 - (void)firmwareUpdateDidEnd:(NSNotification *)notification
 {
-    [self showUpdateMessage:@"Successfully updated firmware!"];
+    [self showUpdateMessage:@"Successfully updated firmware!" warning:NO];
 }
 
-- (void)showUpdateMessage:(NSString *)message
+- (void)showUpdateMessage:(NSString *)message warning:(BOOL)isWarning
 {
     UIViewController *topViewController = self.navigationController.topViewController;
     
-    [topViewController presentMessage:message animated:NO completion:nil];
+    [topViewController presentMessage:message animated:NO warning:isWarning completion:nil];
 }
 
 - (void)closestBeaconDidChange:(NSNotification *)notification
@@ -461,13 +461,13 @@
         UIViewController *topViewController = self.navigationController.topViewController;
         
         if (self.beacon.characteristicsAreBeingUpdated) {
-            [topViewController presentMessage:@"Updating beacon's properties..." animated:animated completion:nil];
+            [topViewController presentMessage:@"Updating beacon's properties..." animated:animated warning:YES completion:nil];
         } else if (self.beacon.needsCharacteristicsUpdate) {
-            [topViewController presentMessage:@"This beacon needs to have its properties updated. Move closer to it and wait for a while" animated:animated completion:nil];
+            [topViewController presentMessage:@"This beacon needs to have its properties updated. Move closer to it and wait for a while" animated:animated warning:YES completion:nil];
         } else if (self.beacon.needsFirmwareUpdate) {
-            [topViewController presentMessage:@"This beacon needs to have its firmware updated. Move closer to it and wait for a while" animated:animated completion:nil];
+            [topViewController presentMessage:@"This beacon needs to have its firmware updated. Move closer to it and wait for a while" animated:animated warning:YES completion:nil];
         } else if (self.beacon.firmwareUpdateProgress > 0 && self.beacon.firmwareUpdateProgress != NSNotFound) {
-            [topViewController presentMessage:@"This beacon's firmware is being updated" animated:animated completion:nil];
+            [topViewController presentMessage:@"This beacon's firmware is being updated" animated:animated warning:YES completion:nil];
         } else {
             [self hideUpdateMessages:YES];
         }

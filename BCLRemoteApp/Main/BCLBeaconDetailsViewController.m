@@ -23,6 +23,8 @@
 #import "BCLUUIDTextFieldFormatter.h"
 #import "UIViewController+BCLBannerMessages.h"
 
+static const CGFloat BCLKontaktIOFieldsHeight = 52.0f;
+
 @interface BCLBeaconDetailsViewController () <UIAlertViewDelegate,  UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *beaconNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *beaconNameTextField;
@@ -47,6 +49,21 @@
 @property (weak, nonatomic) IBOutlet UIImageView *zonesDisclosureIndicatorImage;
 @property (weak, nonatomic) IBOutlet UIImageView *notificationsDisclosureIndicatorImage;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *barButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *uuidViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *firmwareVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *batteryStatusLabel;
+@property (weak, nonatomic) IBOutlet UIView *firmwareVersionBGView;
+@property (weak, nonatomic) IBOutlet UIView *batteryStatusBGView;
+@property (weak, nonatomic) IBOutlet UILabel *vendorNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *deviceIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *signalIntervalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *transmissionPowerLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *deviceIDViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *kontaktStatusViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signalIntervalViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *transmissionPowerViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonViewHeightConstraint;
 
 @property (nonatomic) NSNumber *selectedFloor;
 @property (nonatomic) NSString *notificationMessage;
@@ -453,6 +470,22 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     self.longitudeTextField.text = [NSString stringWithFormat:@"%f", self.beacon.location.location.coordinate.longitude];
     self.selectedZone = self.beacon.zone;
     self.selectedTrigger = BCLEventTypeEnter;
+    self.vendorNameLabel.text = self.beacon.vendor ?: @"Other";
+    if (self.beacon.estimatedDistance != NSNotFound) {
+        self.distanceLabel.text = [NSString stringWithFormat:@"%f m", self.beacon.estimatedDistance];
+    } else {
+        self.distanceLabel.text = @"Unknown";
+    }
+
+    // kontakt.io specific fields
+    BOOL isKontaktIO = [self.beacon.vendor isEqualToString:@"Kontakt"];
+    self.deviceIDViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
+    self.kontaktStatusViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
+    self.signalIntervalViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
+    self.transmissionPowerViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
+
+    self.batteryStatusLabel.text = [NSString stringWithFormat:@"%d %%", self.beacon.batteryLevel];
+    self.firmwareVersionLabel.text = self.beacon.vendorFirmwareVersion;
 
     NSString *notificationMessage;
     BCLAction *testAction = [[BeaconCtrlManager sharedManager] testActionForBeacon:self.beacon];
@@ -565,7 +598,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
             self.barButton.title = @"Cancel";
             [self.confirmButton setTitle:@"Save beacon" forState:UIControlStateNormal];
             self.confirmButton.backgroundColor = [UIColor blueAppColor];
-            [self setEditingEnabled:YES];
+            [self setEditingEnabled:YES animated:YES];
             break;
         case kBCLBeaconModeDetails:
             self.floorTitleLabel.text = @"Floor:";
@@ -574,7 +607,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
             self.barButton.title = @"Edit";
             [self.confirmButton setTitle:@"Delete beacon" forState:UIControlStateNormal];
             self.confirmButton.backgroundColor = [UIColor redAppColor];
-            [self setEditingEnabled:NO];
+            [self setEditingEnabled:NO animated:YES];
             break;
         case kBCLBeaconModeHidden:
             self.floorTitleLabel.text = @"Beacon:";
@@ -611,11 +644,13 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
 - (void)setEditableTextFieldBackgroundsVisible:(BOOL)visible animated:(BOOL)animated
 {
-    for (UIView *view in self.editableTextFieldsBackgrounds) {
-        [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+    [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+        for (UIView *view in self.editableTextFieldsBackgrounds) {
             view.backgroundColor = [view.backgroundColor colorWithAlphaComponent:visible];
-        }];
-    }
+        }
+        self.uuidViewHeightConstraint.constant = visible ? 40.0f : 30.0f;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (NSArray *)editableTextFieldsBackgrounds

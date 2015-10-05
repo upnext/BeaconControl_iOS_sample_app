@@ -21,7 +21,7 @@
 #import "AlertControllerManager.h"
 #import "UIViewController+BCLActivityIndicator.h"
 #import "BCLUUIDTextFieldFormatter.h"
-#import "UIViewController+BCLValidationErrors.h"
+#import "UIViewController+BCLBannerMessages.h"
 
 @interface BCLBeaconDetailsViewController () <UIAlertViewDelegate,  UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *beaconNameLabel;
@@ -79,6 +79,18 @@
     
     self.uuidFormatter = [BCLUUIDTextFieldFormatter new];
     self.uuidFormatter.textField = self.uuidTextField;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.beacon) {
+        [self showUpdateMessages:NO];
+    } else {
+        [self hideUpdateMessages:NO];
+    }
+    
 }
 
 - (void)decreaseFontSize
@@ -305,7 +317,7 @@
 
 - (void)resetFormValidation
 {
-    [self hideErrorView];
+    [self hideBannerView:NO];
     self.beaconNameTextField.layer.borderWidth = 0;
     self.uuidTextField.superview.layer.borderWidth = 0;
     self.majorTextField.superview.layer.borderWidth = 0;
@@ -406,12 +418,44 @@
     return BCLEventTypeUnknown;
 }
 
+- (void)showUpdateMessages:(BOOL)animated
+{
+    if (self.beacon) {
+        UIViewController *topViewController = self.navigationController.topViewController;
+        
+        if (self.beacon.characteristicsAreBeingUpdated) {
+            [topViewController presentMessage:@"Updating beacon's properties..." animated:animated completion:nil];
+        } else if (self.beacon.needsCharacteristicsUpdate) {
+            [topViewController presentMessage:@"This beacon needs to have its properties updated. Move closer to it and wait for a while" animated:animated completion:nil];
+        } else if (self.beacon.needsFirmwareUpdate) {
+            [topViewController presentMessage:@"This beacon needs to have its firmware updated. Move closer to it and wait for a while" animated:animated completion:nil];
+        } else if (self.beacon.firmwareUpdateProgress > 0 && self.beacon.firmwareUpdateProgress != NSNotFound) {
+            [topViewController presentMessage:@"This beacon's firmware is being updated" animated:animated completion:nil];
+        } else {
+            [self hideUpdateMessages:YES];
+        }
+    }
+}
+
+- (void)hideUpdateMessages:(BOOL)animated
+{
+    UIViewController *topViewController = self.navigationController.topViewController;
+    
+    [topViewController hideBannerView:animated];
+}
+
 #pragma mark - Accessors
 
 - (void)setBeacon:(BCLBeacon *)beacon
 {
     _beacon = beacon;
     [self updateView];
+    
+    if (beacon) {
+        [self showUpdateMessages:YES];
+    } else {
+        [self hideUpdateMessages:YES];
+    }
 }
 
 - (void)setNotificationMessage:(NSString *)notificationMessage

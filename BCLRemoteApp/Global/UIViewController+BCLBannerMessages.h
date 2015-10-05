@@ -11,9 +11,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIViewController (BCLValidationErrors)
+@interface UIViewController (BCLBannerMessages)
 
 - (void)presentValidationError:(NSString *)errorMessage completion:(void(^)(BOOL))completion;
 
-- (void)hideErrorView;
+- (void)presentMessage:(NSString *)message animated:(BOOL)animated completion:(void(^)(BOOL))completion;
+
+- (void)hideBannerView:(BOOL)animated;
+
 @end

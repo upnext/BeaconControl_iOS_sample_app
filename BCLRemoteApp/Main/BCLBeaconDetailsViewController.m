@@ -55,6 +55,7 @@ static const CGFloat BCLKontaktIOFieldsHeight = 52.0f;
 @property (weak, nonatomic) IBOutlet UIView *firmwareVersionBGView;
 @property (weak, nonatomic) IBOutlet UIView *batteryStatusBGView;
 @property (weak, nonatomic) IBOutlet UILabel *vendorNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *vendorDisclosureIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *deviceIDLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *signalIntervalLabel;
@@ -72,6 +73,7 @@ static const CGFloat BCLKontaktIOFieldsHeight = 52.0f;
 @property (nonatomic) NSArray *editableTextFieldsBackgrounds;
 
 @property(nonatomic, strong) BCLUUIDTextFieldFormatter *uuidFormatter;
+@property(nonatomic, strong) NSTimer *distaceReloadTimer;
 @end
 
 static const NSUInteger BCLEditableTextFieldBGTag = 23;
@@ -94,6 +96,9 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     if ([UIScreen mainScreen].bounds.size.height < 667.0) {
         [self decreaseFontSize];
     }
+    
+    //distance reload timer
+    self.distaceReloadTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(reloadDistance) userInfo:nil repeats:YES];
 
     //beacon and zone listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closestBeaconDidChange:) name:BeaconManagerClosestBeaconDidChangeNotification object:nil];
@@ -108,6 +113,15 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     self.uuidFormatter.textField = self.uuidTextField;
 
     [self setEditingEnabled:NO];
+}
+
+- (void)reloadDistance
+{
+    if (self.beacon.estimatedDistance != NSNotFound) {
+        self.distanceLabel.text = [NSString stringWithFormat:@"%.2f m", self.beacon.estimatedDistance];
+    } else {
+        self.distanceLabel.text = @"Unknown";
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -471,11 +485,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     self.selectedZone = self.beacon.zone;
     self.selectedTrigger = BCLEventTypeEnter;
     self.vendorNameLabel.text = self.beacon.vendor ?: @"Other";
-    if (self.beacon.estimatedDistance != NSNotFound) {
-        self.distanceLabel.text = [NSString stringWithFormat:@"%f m", self.beacon.estimatedDistance];
-    } else {
-        self.distanceLabel.text = @"Unknown";
-    }
+    [self reloadDistance];
 
     // kontakt.io specific fields
     BOOL isKontaktIO = [self.beacon.vendor isEqualToString:@"Kontakt"];
@@ -486,6 +496,10 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
     self.batteryStatusLabel.text = [NSString stringWithFormat:@"%d %%", self.beacon.batteryLevel];
     self.firmwareVersionLabel.text = self.beacon.vendorFirmwareVersion;
+    //self.deviceIDLabel.text = self.beacon.identifier;
+    //self.transmissionPowerLabel.text = self.beacon.
+    //self.signalIntervalLabel.text = self.beacon.
+
 
     NSString *notificationMessage;
     BCLAction *testAction = [[BeaconCtrlManager sharedManager] testActionForBeacon:self.beacon];
@@ -626,6 +640,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 {
     self.zonesDisclosureIndicatorImage.hidden = !enabled;
     self.notificationsDisclosureIndicatorImage.hidden = !enabled;
+    self.vendorDisclosureIndicator.hidden = !enabled;
     self.minorTextField.enabled = enabled;
     self.beaconNameTextField.enabled = enabled;
     self.latitudeTextField.enabled = enabled;

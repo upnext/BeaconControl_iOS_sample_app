@@ -10,7 +10,7 @@
 //
 
 #import <objc/runtime.h>
-#import "UIViewController+BCLValidationErrors.h"
+#import "UIViewController+BCLBannerMessages.h"
 #import "UIColor+BCLAppColors.h"
 
 static char validationErrorViewKey;
@@ -21,53 +21,72 @@ static char errorLabelKey;
 
 - (void)presentValidationError:(NSString *)errorMessage completion:(void(^)(BOOL))completion
 {
-    if (self.validationErrorView) {
-        self.errorViewLabel.text = errorMessage;
-        [self showErrorViewAnimated:YES completion:^(BOOL finished) {
-            [self performSelector:@selector(hideAnimation:) withObject:completion afterDelay:2.0];
-        }];
+    if (self.bannerView) {
+        self.bannerViewLabel.text = errorMessage;
+        [self showBannerViewAnimated:YES duration:@(2.0) completion:nil];
     }
 }
 
-- (void)showErrorViewAnimated:(BOOL)animated completion:(void(^)(BOOL))completion
+- (void)presentMessage:(NSString *)message animated:(BOOL)animated completion:(void (^)(BOOL))completion
 {
-    self.validationErrorView.hidden = NO;
-    [UIView animateWithDuration:animated?0.5:0.0 animations:^{
-        self.errorViewTopConstraint.constant = 0.0;
-        [self.view layoutIfNeeded];
-    } completion:completion];
+    if (self.bannerView) {
+        [self hideBannerView:NO];
+        self.bannerViewLabel.text = message;
+        [self showBannerViewAnimated:animated duration:nil completion:nil];
+    }
 }
 
-- (void)hideErrorViewAnimated:(BOOL)animated completion:(void(^)(BOOL))completion
+- (void)showBannerViewAnimated:(BOOL)animated duration:(NSNumber *)duration completion:(void(^)(BOOL))completion
+{
+    __weak typeof(self) weakSelf = self;
+    
+    void (^finalCompletion)(BOOL finished) = ^void(BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
+        
+        if (duration) {
+            [weakSelf performSelector:@selector(hideAnimation:) withObject:completion afterDelay:duration.floatValue];
+        }
+    };
+    
+    self.bannerView.hidden = NO;
+    [UIView animateWithDuration:animated?0.5:0.0 animations:^{
+        self.bannerViewTopConstraint.constant = 0.0;
+        [self.view layoutIfNeeded];
+    } completion:finalCompletion];
+}
+
+- (void)hideBannerViewAnimated:(BOOL)animated completion:(void(^)(BOOL))completion
 {
     if (!animated) {
-        self.errorViewTopConstraint.constant = -35;
-        self.validationErrorView.hidden = YES;
+        self.bannerViewTopConstraint.constant = -35;
+        self.bannerView.hidden = YES;
         return;
     }
 
     [UIView animateWithDuration:0.5 animations:^{
-        self.errorViewTopConstraint.constant = -35;
+        self.bannerViewTopConstraint.constant = -35;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        self.validationErrorView.hidden = YES;
+        self.bannerView.hidden = YES;
         if (completion) {
             completion(finished);
         }
     }];
 }
 
-- (void)hideErrorView
+- (void)hideBannerView:(BOOL)animated
 {
-    [self hideErrorViewAnimated:NO completion:nil];
+    [self hideBannerViewAnimated:animated completion:nil];
 }
 
 - (void)hideAnimation:(void(^)(BOOL))completion
 {
-    [self hideErrorViewAnimated:YES completion:completion];
+    [self hideBannerViewAnimated:YES completion:completion];
 }
 
-- (UIView *)validationErrorView
+- (UIView *)bannerView
 {
     UIView *validationErrorView = objc_getAssociatedObject(self, &validationErrorViewKey);
     if (!validationErrorView) {
@@ -120,12 +139,12 @@ static char errorLabelKey;
     return validationErrorView;
 }
 
-- (NSLayoutConstraint *)errorViewTopConstraint
+- (NSLayoutConstraint *)bannerViewTopConstraint
 {
     return objc_getAssociatedObject(self, &topConstraintKey);
 }
 
-- (UILabel *)errorViewLabel
+- (UILabel *)bannerViewLabel
 {
     return objc_getAssociatedObject(self, &errorLabelKey);
 }

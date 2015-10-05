@@ -17,7 +17,6 @@
 #import "AlertControllerManager.h"
 #import "UIViewController+BCLActivityIndicator.h"
 #import "UIViewController+MFSideMenuAdditions.h"
-#import "UIViewController+BCLValidationErrors.h"
 #import "AppDelegate.h"
 #import <Mapbox-iOS-SDK/Mapbox.h>
 #import <MFSideMenu/MFSideMenuContainerViewController.h>
@@ -96,6 +95,11 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     self.floor = nil;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerDidFetchBeaconCtrlConfigurationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerPropertiesUpdateDidStartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerPropertiesUpdateDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerFirmwareUpdateDidStartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerFirmwareUpdateDidProgressNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerFirmwareUpdateDidFinishNotification object:nil];
     [self reloadBeacons];
 }
 
@@ -381,16 +385,6 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
                     annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:YES needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
                 } else {
                     annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"beaconWithoutZonePressed"]];
-                }
-                
-                if (beacon.characteristicsAreBeingUpdated) {
-                    [self presentValidationError:@"Updating beacon's properties..." completion:nil];
-                } else if (beacon.needsCharacteristicsUpdate) {
-                    [self presentValidationError:@"This beacon needs to have its properties updated. Move closer to it and wait for a while" completion:nil];
-                } else if (beacon.needsFirmwareUpdate) {
-                    [self presentValidationError:@"This beacon needs to have its firmware updated. Move closer to it and wait for a while" completion:nil];
-                } else if (beacon.firmwareUpdateProgress > 0 && beacon.firmwareUpdateProgress != NSNotFound) {
-                    [self presentValidationError:@"This beacon's firmware is being updated" completion:nil];
                 }
             };
                 break;

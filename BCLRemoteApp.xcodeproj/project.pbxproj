@@ -13,7 +13,7 @@
 		7503CCE51B445D1400949512 /* UIColor+BCLAppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCDD1B445D1400949512 /* UIColor+BCLAppColors.m */; };
 		7503CCE61B445D1400949512 /* UIImage+BeaconMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCDF1B445D1400949512 /* UIImage+BeaconMarker.m */; };
 		7503CCE71B445D1400949512 /* UIViewController+BCLActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCE11B445D1400949512 /* UIViewController+BCLActivityIndicator.m */; };
-		7503CCE81B445D1400949512 /* UIViewController+BCLValidationErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCE31B445D1400949512 /* UIViewController+BCLValidationErrors.m */; };
+		7503CCE81B445D1400949512 /* UIViewController+BCLBannerMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCE31B445D1400949512 /* UIViewController+BCLBannerMessages.m */; };
 		7503CCEE1B445D4400949512 /* BCLZonesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCEA1B445D4400949512 /* BCLZonesTableViewCell.m */; };
 		7503CCEF1B445D4400949512 /* BLCZonesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7503CCEC1B445D4400949512 /* BLCZonesViewController.m */; };
 		7503CCF01B445D4400949512 /* Zones.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7503CCED1B445D4400949512 /* Zones.storyboard */; };
@@ -56,8 +56,8 @@
 		7503CCDF1B445D1400949512 /* UIImage+BeaconMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+BeaconMarker.m"; path = "BCLRemoteApp/Global/UIImage+BeaconMarker.m"; sourceTree = SOURCE_ROOT; };
 		7503CCE01B445D1400949512 /* UIViewController+BCLActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+BCLActivityIndicator.h"; path = "BCLRemoteApp/Global/UIViewController+BCLActivityIndicator.h"; sourceTree = SOURCE_ROOT; };
 		7503CCE11B445D1400949512 /* UIViewController+BCLActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+BCLActivityIndicator.m"; path = "BCLRemoteApp/Global/UIViewController+BCLActivityIndicator.m"; sourceTree = SOURCE_ROOT; };
-		7503CCE21B445D1400949512 /* UIViewController+BCLValidationErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+BCLValidationErrors.h"; path = "BCLRemoteApp/Global/UIViewController+BCLValidationErrors.h"; sourceTree = SOURCE_ROOT; };
-		7503CCE31B445D1400949512 /* UIViewController+BCLValidationErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+BCLValidationErrors.m"; path = "BCLRemoteApp/Global/UIViewController+BCLValidationErrors.m"; sourceTree = SOURCE_ROOT; };
+		7503CCE21B445D1400949512 /* UIViewController+BCLBannerMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+BCLBannerMessages.h"; path = "BCLRemoteApp/Global/UIViewController+BCLBannerMessages.h"; sourceTree = SOURCE_ROOT; };
+		7503CCE31B445D1400949512 /* UIViewController+BCLBannerMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+BCLBannerMessages.m"; path = "BCLRemoteApp/Global/UIViewController+BCLBannerMessages.m"; sourceTree = SOURCE_ROOT; };
 		7503CCE91B445D4400949512 /* BCLZonesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLZonesTableViewCell.h; path = BCLRemoteApp/Zones/BCLZonesTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		7503CCEA1B445D4400949512 /* BCLZonesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLZonesTableViewCell.m; path = BCLRemoteApp/Zones/BCLZonesTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		7503CCEB1B445D4400949512 /* BLCZonesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCZonesViewController.h; path = BCLRemoteApp/Zones/BLCZonesViewController.h; sourceTree = SOURCE_ROOT; };
@@ -129,8 +129,8 @@
 				7503CCDF1B445D1400949512 /* UIImage+BeaconMarker.m */,
 				7503CCE01B445D1400949512 /* UIViewController+BCLActivityIndicator.h */,
 				7503CCE11B445D1400949512 /* UIViewController+BCLActivityIndicator.m */,
-				7503CCE21B445D1400949512 /* UIViewController+BCLValidationErrors.h */,
-				7503CCE31B445D1400949512 /* UIViewController+BCLValidationErrors.m */,
+				7503CCE21B445D1400949512 /* UIViewController+BCLBannerMessages.h */,
+				7503CCE31B445D1400949512 /* UIViewController+BCLBannerMessages.m */,
 				AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */,
 				AF6E0DBA1B4D584300E07918 /* BCLSystemSettingsViewController.h */,
 				AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */,
@@ -412,7 +412,7 @@
 				7503CD121B445E4300949512 /* BCLSideMenuTableViewCell.m in Sources */,
 				75B113B51B49CFCB00289368 /* BCLChooseTriggerViewController.m in Sources */,
 				7503CCE41B445D1400949512 /* BCLUUIDTextFieldFormatter.m in Sources */,
-				7503CCE81B445D1400949512 /* UIViewController+BCLValidationErrors.m in Sources */,
+				7503CCE81B445D1400949512 /* UIViewController+BCLBannerMessages.m in Sources */,
 				7503CD131B445E4300949512 /* BCLSideMenuViewController.m in Sources */,
 				7503CCF31B445D5200949512 /* BeaconCtrlManager.m in Sources */,
 				7503CD091B445E1A00949512 /* BCLLoginViewController.m in Sources */,

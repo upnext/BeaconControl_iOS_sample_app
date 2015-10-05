@@ -95,11 +95,6 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     self.floor = nil;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerDidFetchBeaconCtrlConfigurationNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerPropertiesUpdateDidStartNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerPropertiesUpdateDidFinishNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerFirmwareUpdateDidStartNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerFirmwareUpdateDidProgressNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsReload) name:BeaconManagerFirmwareUpdateDidFinishNotification object:nil];
     [self reloadBeacons];
 }
 

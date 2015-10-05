@@ -494,11 +494,29 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     self.signalIntervalViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
     self.transmissionPowerViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
 
-    self.batteryStatusLabel.text = [NSString stringWithFormat:@"%d %%", self.beacon.batteryLevel];
-    self.firmwareVersionLabel.text = self.beacon.vendorFirmwareVersion;
-    //self.deviceIDLabel.text = self.beacon.identifier;
-    //self.transmissionPowerLabel.text = self.beacon.
-    //self.signalIntervalLabel.text = self.beacon.
+    if (self.beacon.batteryLevel != NSNotFound) {
+        self.batteryStatusLabel.text = [NSString stringWithFormat:@"%d %%", self.beacon.batteryLevel];
+        if (self.beacon.batteryLevel <= 20) {
+            self.batteryStatusBGView.backgroundColor = [UIColor colorWithRed:0.95 green:0.32 blue:0.29 alpha:1];
+        } else if (self.beacon.batteryLevel <= 40) {
+            self.batteryStatusBGView.backgroundColor = [UIColor colorWithRed:1 green:0.94 blue:0.94 alpha:1];
+        } else {
+            self.batteryStatusBGView.backgroundColor = [UIColor whiteColor];
+        }
+    } else {
+        self.batteryStatusBGView.backgroundColor = [UIColor whiteColor];
+        self.batteryStatusLabel.text = @"-";
+    }
+
+    if (self.beacon.vendorFirmwareVersion) {
+        self.firmwareVersionLabel.text = self.beacon.vendorFirmwareVersion;
+    } else {
+        self.firmwareVersionLabel.text = @"-";
+    }
+
+    self.deviceIDLabel.text = self.beacon.vendorIdentifier;
+    self.transmissionPowerLabel.text = [NSString stringWithFormat:@"%d", self.beacon.transmissionPower];
+    self.signalIntervalLabel.text = [NSString stringWithFormat:@"%d", self.beacon.transmissionInterval];
 
 
     NSString *notificationMessage;

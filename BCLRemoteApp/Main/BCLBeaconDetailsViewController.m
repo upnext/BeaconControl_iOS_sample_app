@@ -677,7 +677,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
 - (void)setEditableTextFieldBackgroundsVisible:(BOOL)visible animated:(BOOL)animated
 {
-    [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
         for (UIView *view in self.editableTextFieldsBackgrounds) {
             view.backgroundColor = [view.backgroundColor colorWithAlphaComponent:visible];
         }

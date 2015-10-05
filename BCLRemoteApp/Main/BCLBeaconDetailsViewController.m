@@ -168,26 +168,46 @@
 
 - (void)propertiesUpdateDidStart:(NSNotification *)notification
 {
+    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+        return;
+    }
+    
     [self showUpdateMessage:@"Updating properties..." warning:YES];
 }
 
 - (void)propertiesUpdateDidEnd:(NSNotification *)notification
 {
+    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+        return;
+    }
+    
     [self showUpdateMessage:@"Properties succesfully updated!" warning:NO];
 }
 
 - (void)firmwareUpdateDidStart:(NSNotification *)notification
 {
+    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+        return;
+    }
+    
     [self showUpdateMessage:@"Updating firmware..." warning:YES];
 }
 
 - (void)firmwareUpdateDidProgress:(NSNotification *)notification
 {
+    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+        return;
+    }
+    
     [self showUpdateMessage:[NSString stringWithFormat:@"Firwmare update progress: %@%%", notification.userInfo[@"progress"]] warning:YES];
 }
 
 - (void)firmwareUpdateDidEnd:(NSNotification *)notification
 {
+    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+        return;
+    }
+    
     [self showUpdateMessage:@"Successfully updated firmware!" warning:NO];
 }
 

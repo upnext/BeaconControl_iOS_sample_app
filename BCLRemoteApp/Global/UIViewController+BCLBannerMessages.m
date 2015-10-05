@@ -27,11 +27,12 @@ static char errorLabelKey;
     }
 }
 
-- (void)presentMessage:(NSString *)message animated:(BOOL)animated completion:(void (^)(BOOL))completion
+- (void)presentMessage:(NSString *)message animated:(BOOL)animated warning:(BOOL)isWarning completion:(void (^)(BOOL))completion
 {
     if (self.bannerView) {
         [self hideBannerView:NO];
         self.bannerViewLabel.text = message;
+        self.bannerView.backgroundColor = isWarning ? [UIColor redAppColor] : [UIColor greenAppColor];
         [self showBannerViewAnimated:animated duration:nil completion:nil];
     }
 }

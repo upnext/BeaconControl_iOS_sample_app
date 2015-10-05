@@ -76,6 +76,11 @@
     //beacon and zone listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closestBeaconDidChange:) name:BeaconManagerClosestBeaconDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currentZoneDidChange:) name:BeaconManagerCurrentZoneDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(propertiesUpdateDidStart:) name:BeaconManagerPropertiesUpdateDidStartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(propertiesUpdateDidEnd:) name:BeaconManagerPropertiesUpdateDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firmwareUpdateDidStart:) name:BeaconManagerFirmwareUpdateDidStartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firmwareUpdateDidProgress:) name:BeaconManagerFirmwareUpdateDidProgressNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firmwareUpdateDidEnd:) name:BeaconManagerFirmwareUpdateDidFinishNotification object:nil];
     
     self.uuidFormatter = [BCLUUIDTextFieldFormatter new];
     self.uuidFormatter.textField = self.uuidTextField;
@@ -159,6 +164,38 @@
     if (self.beaconMode == kBCLBeaconModeHidden) {
         self.selectedZone = [BeaconCtrlManager sharedManager].beaconCtrl.currentZone;
     }
+}
+
+- (void)propertiesUpdateDidStart:(NSNotification *)notification
+{
+    [self showUpdateMessage:@"Updating properties..."];
+}
+
+- (void)propertiesUpdateDidEnd:(NSNotification *)notification
+{
+    [self showUpdateMessage:@"Properties succesfully updated!"];
+}
+
+- (void)firmwareUpdateDidStart:(NSNotification *)notification
+{
+    [self showUpdateMessage:@"Updating firmware..."];
+}
+
+- (void)firmwareUpdateDidProgress:(NSNotification *)notification
+{
+    [self showUpdateMessage:[NSString stringWithFormat:@"Firwmare update progress: %@%%", notification.userInfo[@"progress"]]];
+}
+
+- (void)firmwareUpdateDidEnd:(NSNotification *)notification
+{
+    [self showUpdateMessage:@"Successfully updated firmware!"];
+}
+
+- (void)showUpdateMessage:(NSString *)message
+{
+    UIViewController *topViewController = self.navigationController.topViewController;
+    
+    [topViewController presentMessage:message animated:NO completion:nil];
 }
 
 - (void)closestBeaconDidChange:(NSNotification *)notification

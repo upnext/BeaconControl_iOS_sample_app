@@ -22,10 +22,12 @@
 #import "UIViewController+BCLActivityIndicator.h"
 #import "BCLUUIDTextFieldFormatter.h"
 #import "UIViewController+BCLBannerMessages.h"
+#import "BCLVendorChoiceViewController.h"
 
 static const CGFloat BCLKontaktIOFieldsHeight = 52.0f;
+static NSString *const BCLShowVendorChoiceSegueIdentifier = @"showVendorChoiceSegue";
 
-@interface BCLBeaconDetailsViewController () <UIAlertViewDelegate,  UITextFieldDelegate>
+@interface BCLBeaconDetailsViewController () <UIAlertViewDelegate, UITextFieldDelegate, BCLVendorChoiceViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *beaconNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *beaconNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *uuidTextField;
@@ -65,6 +67,7 @@ static const CGFloat BCLKontaktIOFieldsHeight = 52.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signalIntervalViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transmissionPowerViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonViewHeightConstraint;
+@property (nonatomic) BOOL editingEnabled;
 
 @property (nonatomic) NSNumber *selectedFloor;
 @property (nonatomic) NSString *notificationMessage;
@@ -74,6 +77,7 @@ static const CGFloat BCLKontaktIOFieldsHeight = 52.0f;
 
 @property(nonatomic, strong) BCLUUIDTextFieldFormatter *uuidFormatter;
 @property(nonatomic, strong) NSTimer *distaceReloadTimer;
+@property(nonatomic, copy) NSString *selectedVendor;
 @end
 
 static const NSUInteger BCLEditableTextFieldBGTag = 23;
@@ -83,6 +87,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.distaceReloadTimer invalidate];
 }
 
 #pragma mark - UIViewController
@@ -157,7 +162,6 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
                 label.font = [label.font fontWithSize:label.font.pointSize - 3];
             }
         }
-
 
         [self decreaseFontSize:view];
     }
@@ -483,6 +487,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     self.latitudeTextField.text = [NSString stringWithFormat:@"%f", self.beacon.location.location.coordinate.latitude];
     self.longitudeTextField.text = [NSString stringWithFormat:@"%f", self.beacon.location.location.coordinate.longitude];
     self.selectedZone = self.beacon.zone;
+    self.selectedVendor = self.beacon.vendor;
     self.selectedTrigger = BCLEventTypeEnter;
     self.vendorNameLabel.text = self.beacon.vendor ?: @"Other";
     [self reloadDistance];
@@ -611,6 +616,12 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     self.zoneButtonFloorLabel.text = [NSString stringWithFormat:@"%@", selectedFloor ? : @"None"];
 }
 
+- (void)setSelectedVendor:(NSString *)selectedVendor
+{
+    _selectedVendor = selectedVendor ?: @"Other";
+    self.vendorNameLabel.text = _selectedVendor;
+}
+
 - (void)setBeaconMode:(BCLBeaconDetailsMode)beaconMode
 {
     _beaconMode = beaconMode;
@@ -656,6 +667,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
 - (void)setEditingEnabled:(BOOL)enabled animated:(BOOL)animated
 {
+    _editingEnabled = enabled;
     self.zonesDisclosureIndicatorImage.hidden = !enabled;
     self.notificationsDisclosureIndicatorImage.hidden = !enabled;
     self.vendorDisclosureIndicator.hidden = !enabled;
@@ -778,11 +790,37 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.destinationViewController isKindOfClass:[BCLNotificationSetupViewController class]]) {
-        BCLNotificationSetupViewController *viewController = (segue.destinationViewController);
+        BCLNotificationSetupViewController *viewController = (BCLNotificationSetupViewController *) segue.destinationViewController;
         viewController.delegate = self;
         viewController.notificationMessage = self.notificationMessage;
         viewController.chosenTrigger = self.selectedTrigger;
+    } else if ([segue.destinationViewController isKindOfClass:[BCLVendorChoiceViewController class]]) {
+        BCLVendorChoiceViewController *vendorChoiceViewController = (BCLVendorChoiceViewController *) segue.destinationViewController;
+        vendorChoiceViewController.delegate = self;
+        vendorChoiceViewController.selectedVendor = self.selectedVendor;
     }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(nullable id)sender
+{
+    if ([identifier isEqualToString:BCLShowVendorChoiceSegueIdentifier]) {
+        return self.editingEnabled;
+    }
+
+    return YES;
+}
+
+#pragma mark BCLVendorChoiceViewControllerDelegate
+
+- (void)vendorChoiceViewController:(BCLVendorChoiceViewController *)viewController didChooseVendor:(NSString *)vendor
+{
+    self.selectedVendor = vendor;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)vendorChoiceViewControllerDidCancel:(BCLVendorChoiceViewController *)viewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

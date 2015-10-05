@@ -37,6 +37,8 @@
 		756D536C1B3B0E7B0062F3BB /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 756D536B1B3B0E7B0062F3BB /* LICENSE.txt */; };
 		758A3DA61B050F0700645DE6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758A3DA51B050F0700645DE6 /* MapKit.framework */; };
 		75B113B51B49CFCB00289368 /* BCLChooseTriggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */; };
+		AF5A40B81BC2EB470044C486 /* BCLVendorChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A40B71BC2EB470044C486 /* BCLVendorChoiceViewController.m */; settings = {ASSET_TAGS = (); }; };
+		AF5A40BB1BC2FC5A0044C486 /* BCLVendorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A40BA1BC2FC5A0044C486 /* BCLVendorCell.m */; settings = {ASSET_TAGS = (); }; };
 		AF6E0DB91B4D580100E07918 /* SystemSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */; };
 		AF6E0DBC1B4D584300E07918 /* BCLSystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */; };
 		AF7B68381B4BFED9004027D7 /* BCLTriggerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */; };
@@ -96,6 +98,10 @@
 		75B113B31B49CFCB00289368 /* BCLChooseTriggerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLChooseTriggerViewController.h; path = BCLRemoteApp/Main/BCLChooseTriggerViewController.h; sourceTree = SOURCE_ROOT; };
 		75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLChooseTriggerViewController.m; path = BCLRemoteApp/Main/BCLChooseTriggerViewController.m; sourceTree = SOURCE_ROOT; };
 		9D314D2116E5D7F0F6A46696 /* Pods-BCLRemoteApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCLRemoteApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AF5A40B61BC2EB470044C486 /* BCLVendorChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLVendorChoiceViewController.h; path = BCLRemoteApp/Main/BCLVendorChoiceViewController.h; sourceTree = SOURCE_ROOT; };
+		AF5A40B71BC2EB470044C486 /* BCLVendorChoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLVendorChoiceViewController.m; path = BCLRemoteApp/Main/BCLVendorChoiceViewController.m; sourceTree = SOURCE_ROOT; };
+		AF5A40B91BC2FC5A0044C486 /* BCLVendorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLVendorCell.h; path = BCLRemoteApp/Main/BCLVendorCell.h; sourceTree = SOURCE_ROOT; };
+		AF5A40BA1BC2FC5A0044C486 /* BCLVendorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLVendorCell.m; path = BCLRemoteApp/Main/BCLVendorCell.m; sourceTree = SOURCE_ROOT; };
 		AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemSettingsViewController.xib; sourceTree = SOURCE_ROOT; };
 		AF6E0DBA1B4D584300E07918 /* BCLSystemSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLSystemSettingsViewController.h; path = BCLRemoteApp/Global/BCLSystemSettingsViewController.h; sourceTree = SOURCE_ROOT; };
 		AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLSystemSettingsViewController.m; path = BCLRemoteApp/Global/BCLSystemSettingsViewController.m; sourceTree = SOURCE_ROOT; };
@@ -257,6 +263,10 @@
 				75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */,
 				AF7B68361B4BFED9004027D7 /* BCLTriggerTableViewCell.h */,
 				AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */,
+				AF5A40B61BC2EB470044C486 /* BCLVendorChoiceViewController.h */,
+				AF5A40B71BC2EB470044C486 /* BCLVendorChoiceViewController.m */,
+				AF5A40B91BC2FC5A0044C486 /* BCLVendorCell.h */,
+				AF5A40BA1BC2FC5A0044C486 /* BCLVendorCell.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -402,6 +412,7 @@
 				7503CCD91B445C4C00949512 /* AlertControllerManager.m in Sources */,
 				7503CCFB1B445D9A00949512 /* BCLBeaconDetailsViewController.m in Sources */,
 				AF7B68381B4BFED9004027D7 /* BCLTriggerTableViewCell.m in Sources */,
+				AF5A40B81BC2EB470044C486 /* BCLVendorChoiceViewController.m in Sources */,
 				7503CD0B1B445E1A00949512 /* BCLResetPasswordViewController.m in Sources */,
 				7503CD0A1B445E1A00949512 /* BCLRegisterViewController.m in Sources */,
 				7503CCEE1B445D4400949512 /* BCLZonesTableViewCell.m in Sources */,
@@ -422,6 +433,7 @@
 				7503CCE71B445D1400949512 /* UIViewController+BCLActivityIndicator.m in Sources */,
 				7503CD1D1B445EF000949512 /* main.m in Sources */,
 				7503CD171B445E5800949512 /* AppDelegate.m in Sources */,
+				AF5A40BB1BC2FC5A0044C486 /* BCLVendorCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

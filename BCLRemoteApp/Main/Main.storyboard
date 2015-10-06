@@ -228,7 +228,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="4O0-R1-gYB" secondAttribute="trailing" constant="15" id="yii-kl-6Yk"/>
                                                 </constraints>
                                             </view>
-                                            <view tag="23" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep8-dX-9Sm">
+                                            <view tag="24" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep8-dX-9Sm">
                                                 <rect key="frame" x="192" y="652" width="173" height="40"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="dsssa" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qa1-hp-60q">
@@ -261,7 +261,7 @@
                                                 <color key="textColor" red="0.51342368780000003" green="0.51342368780000003" blue="0.51342368780000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view tag="23" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITp-he-v2o">
+                                            <view tag="24" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITp-he-v2o">
                                                 <rect key="frame" x="8" y="652" width="174" height="40"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="dsssa" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Ot-eu-RMi">
@@ -276,6 +276,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="0Ot-eu-RMi" secondAttribute="trailing" constant="15" id="EdA-fq-RyO"/>
                                                     <constraint firstItem="0Ot-eu-RMi" firstAttribute="leading" secondItem="ITp-he-v2o" secondAttribute="leading" constant="10" id="FPL-So-D2X"/>
                                                     <constraint firstItem="0Ot-eu-RMi" firstAttribute="top" secondItem="ITp-he-v2o" secondAttribute="top" id="FoZ-zk-CHo"/>
+                                                    <constraint firstAttribute="height" constant="40" id="eSr-Ur-UuE"/>
                                                     <constraint firstAttribute="bottom" secondItem="0Ot-eu-RMi" secondAttribute="bottom" id="gjY-Ej-k0V"/>
                                                 </constraints>
                                             </view>
@@ -373,7 +374,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="0kX-18-n9O" secondAttribute="bottom" id="uyQ-lz-HrB"/>
                                                 </constraints>
                                             </view>
-                                            <view tag="23" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-2L-4D1">
+                                            <view tag="24" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-2L-4D1">
                                                 <rect key="frame" x="10" y="42" width="355" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New beacon 01" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sgM-op-KXr">
@@ -812,7 +813,6 @@
                                             <constraint firstItem="5em-DU-ALn" firstAttribute="leading" secondItem="qc4-n4-h58" secondAttribute="leading" id="iOK-Jh-EIB"/>
                                             <constraint firstItem="55T-JT-31g" firstAttribute="leading" secondItem="qc4-n4-h58" secondAttribute="leading" constant="25" id="j3E-Ry-C2U"/>
                                             <constraint firstAttribute="trailing" secondItem="y1j-i2-9F4" secondAttribute="trailing" id="jkg-gl-M0X"/>
-                                            <constraint firstItem="AaL-fw-5Ij" firstAttribute="height" secondItem="ITp-he-v2o" secondAttribute="height" id="jxO-RP-iqF"/>
                                             <constraint firstAttribute="trailing" secondItem="VHh-Ki-hxa" secondAttribute="trailing" id="k0H-vv-mjd"/>
                                             <constraint firstItem="DzR-2L-4D1" firstAttribute="top" secondItem="55T-JT-31g" secondAttribute="bottom" constant="2" id="kRj-CU-tW4"/>
                                             <constraint firstAttribute="trailing" secondItem="DzR-2L-4D1" secondAttribute="trailing" constant="10" id="lsI-5m-Shf"/>
@@ -961,6 +961,7 @@
                         <outlet property="floorTitleLabel" destination="77r-cT-TDX" id="Zm3-lk-XOg"/>
                         <outlet property="kontaktStatusViewHeightConstraint" destination="T7H-Iz-aby" id="1T3-cy-zqc"/>
                         <outlet property="latitudeTextField" destination="0Ot-eu-RMi" id="ldW-Vg-cy0"/>
+                        <outlet property="latitudeViewHeightConstraint" destination="eSr-Ur-UuE" id="ihT-4E-cVH"/>
                         <outlet property="longitudeTextField" destination="qa1-hp-60q" id="f9l-oc-Z1B"/>
                         <outlet property="majorTextField" destination="3mt-Rc-N6i" id="ydd-h9-Jvm"/>
                         <outlet property="minorTextField" destination="4O0-R1-gYB" id="R2y-SH-iQE"/>
@@ -1099,31 +1100,31 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✓" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRl-qG-oUG">
-                                                    <rect key="frame" x="268" y="8" width="42" height="33"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="42" id="WAa-ZC-rpI"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BlueCats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAN-cg-2Hu">
                                                     <rect key="frame" x="20" y="14" width="69" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" tag="77" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox" translatesAutoresizingMaskIntoConstraints="NO" id="SF9-ta-wjM">
+                                                    <rect key="frame" x="284" y="19" width="16" height="12"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="yRl-qG-oUG" firstAttribute="centerY" secondItem="xAt-5J-d4s" secondAttribute="centerY" id="cUn-Cn-CmB"/>
-                                                <constraint firstAttribute="trailing" secondItem="yRl-qG-oUG" secondAttribute="trailing" constant="10" id="dQi-3Q-O2S"/>
+                                                <constraint firstItem="SF9-ta-wjM" firstAttribute="centerY" secondItem="xAt-5J-d4s" secondAttribute="centerY" id="Qko-lM-0FY"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="SF9-ta-wjM" secondAttribute="trailing" constant="6" id="QuC-MT-m9N"/>
                                                 <constraint firstItem="jAN-cg-2Hu" firstAttribute="leading" secondItem="xAt-5J-d4s" secondAttribute="leading" constant="20" id="m5v-Ud-QWv"/>
+                                                <constraint firstAttribute="trailing" secondItem="SF9-ta-wjM" secondAttribute="trailing" constant="20" id="mZT-sS-lua"/>
                                                 <constraint firstItem="jAN-cg-2Hu" firstAttribute="centerY" secondItem="xAt-5J-d4s" secondAttribute="centerY" id="r77-ln-MRe"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="QuC-MT-m9N"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="checkmark" destination="yRl-qG-oUG" id="MUV-JJ-Moh"/>
+                                            <outlet property="checkmark" destination="SF9-ta-wjM" id="eiL-ge-Zz4"/>
                                             <outlet property="nameLabel" destination="jAN-cg-2Hu" id="GHA-5E-IXs"/>
                                         </connections>
                                     </tableViewCell>

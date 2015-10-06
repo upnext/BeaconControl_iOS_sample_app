@@ -13,7 +13,7 @@
 
 @interface BCLVendorCell()
 
-@property (weak, nonatomic) IBOutlet UILabel *checkmark;
+@property (weak, nonatomic) IBOutlet UIView *checkmark;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end

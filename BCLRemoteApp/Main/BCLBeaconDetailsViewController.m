@@ -52,6 +52,7 @@ static NSString *const BCLShowVendorChoiceSegueIdentifier = @"showVendorChoiceSe
 @property (weak, nonatomic) IBOutlet UIImageView *notificationsDisclosureIndicatorImage;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *barButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *uuidViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *latitudeViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *firmwareVersionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *batteryStatusLabel;
 @property (weak, nonatomic) IBOutlet UIView *firmwareVersionBGView;
@@ -81,6 +82,7 @@ static NSString *const BCLShowVendorChoiceSegueIdentifier = @"showVendorChoiceSe
 @end
 
 static const NSUInteger BCLEditableTextFieldBGTag = 23;
+static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 @implementation BCLBeaconDetailsViewController
 
@@ -493,7 +495,7 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
     [self reloadDistance];
 
     // kontakt.io specific fields
-    BOOL isKontaktIO = [self.beacon.vendor isEqualToString:@"Kontakt"];
+    BOOL isKontaktIO = self.beaconIsKontakt;
     self.deviceIDViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
     self.kontaktStatusViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
     self.signalIntervalViewHeightConstraint.constant = isKontaktIO ? BCLKontaktIOFieldsHeight : 0.0f;
@@ -579,6 +581,11 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 }
 
 #pragma mark - Accessors
+
+- (BOOL)beaconIsKontakt
+{
+    return [self.beacon.vendor isEqualToString:@"Kontakt"];
+}
 
 - (void)setBeacon:(BCLBeacon *)beacon
 {
@@ -689,29 +696,26 @@ static const NSUInteger BCLEditableTextFieldBGTag = 23;
 
 - (void)setEditableTextFieldBackgroundsVisible:(BOOL)visible animated:(BOOL)animated
 {
-    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
+    [UIView animateWithDuration:animated ? .25 : 0.0 animations:^{
         for (UIView *view in self.editableTextFieldsBackgrounds) {
             view.backgroundColor = [view.backgroundColor colorWithAlphaComponent:visible];
         }
-        self.uuidViewHeightConstraint.constant = visible ? 40.0f : 30.0f;
+        self.uuidViewHeightConstraint.constant = (visible && !self.beaconIsKontakt) ? 40.0f : 30.0f;
+        self.latitudeViewHeightConstraint.constant = visible ? 40.0f : 30.0f;
         [self.view layoutIfNeeded];
     }];
 }
 
 - (NSArray *)editableTextFieldsBackgrounds
 {
-    if (!_editableTextFieldsBackgrounds) {
-        NSMutableArray *mutableArray = [NSMutableArray new];
-        [self.scrollView.subviews[0].subviews enumerateObjectsUsingBlock:^(UIView * view, NSUInteger idx, BOOL *stop) {
-            if (view.tag == BCLEditableTextFieldBGTag) {
-                [mutableArray addObject:view];
-            }
-        }];
+    NSMutableArray *mutableArray = [NSMutableArray new];
+    [self.scrollView.subviews[0].subviews enumerateObjectsUsingBlock:^(UIView * view, NSUInteger idx, BOOL *stop) {
+        if ((view.tag == BCLEditableTextFieldBGTag && !self.beaconIsKontakt) || view.tag == BCLKontaktEditableTextFieldBGTag) {
+            [mutableArray addObject:view];
+        }
+    }];
 
-        _editableTextFieldsBackgrounds = [mutableArray copy];
-    }
-
-    return _editableTextFieldsBackgrounds;
+    return [mutableArray copy];
 }
 
 - (BeaconCtrlManager *)bclManager

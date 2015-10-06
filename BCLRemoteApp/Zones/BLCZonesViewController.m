@@ -75,6 +75,7 @@ static NSString *kBCLStoryboardName = @"Zones";
             self.zonesHeaderTopCostraint.constant = 20;
             self.floorSelectorContainer.hidden = YES;
             self.floorsTitleLabel.hidden = YES;
+            self.navigationItem.title = @"Zones";
             self.titleLabel.text = @"Zones:";
             self.floorsTitleLabel.text = @"Select the number of floors:";
             self.deleteZonesButton.enabled = NO;

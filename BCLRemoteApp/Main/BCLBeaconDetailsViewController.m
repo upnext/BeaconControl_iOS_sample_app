@@ -677,7 +677,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     _editingEnabled = enabled;
     self.zonesDisclosureIndicatorImage.hidden = !enabled;
     self.notificationsDisclosureIndicatorImage.hidden = !enabled;
-    self.vendorDisclosureIndicator.hidden = !enabled;
+    self.vendorDisclosureIndicator.hidden = !enabled || self.beaconIsKontakt;
     self.minorTextField.enabled = enabled;
     self.beaconNameTextField.enabled = enabled;
     self.latitudeTextField.enabled = enabled;
@@ -808,7 +808,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(nullable id)sender
 {
     if ([identifier isEqualToString:BCLShowVendorChoiceSegueIdentifier]) {
-        return self.editingEnabled;
+        return (self.editingEnabled && !self.beaconIsKontakt);
     }
 
     return YES;

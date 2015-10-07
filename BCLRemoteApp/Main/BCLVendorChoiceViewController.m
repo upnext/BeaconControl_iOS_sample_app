@@ -20,7 +20,7 @@
 @end
 
 static NSArray *_vendors;
-static const NSUInteger BCLKontaktVendorIndex = 5;
+static const NSUInteger BCLKontaktVendorIndex = 7;
 
 @implementation BCLVendorChoiceViewController
 
@@ -34,15 +34,16 @@ static const NSUInteger BCLKontaktVendorIndex = 5;
 {
     if (!_vendors) {
         _vendors = @[
+                @"Other",
                 @"BlueCats",
                 @"BlueSense",
                 @"Estimote",
+                @"Gelo",
                 @"Glimworm",
-                @"Gimbal",
+                @"Gimbal by Qualcomm",
                 @"Kontakt (Use Admin Panel)",
                 @"Sensorberg",
-                @"Sonic Notify",
-                @"Other"
+                @"Sonic Notify"
         ];
     }
 

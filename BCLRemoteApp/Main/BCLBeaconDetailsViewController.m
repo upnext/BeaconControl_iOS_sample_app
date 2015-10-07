@@ -224,7 +224,11 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
         return;
     }
     
-    [self showUpdateMessage:@"Properties succesfully updated!" warning:NO];
+    if ([notification.userInfo[@"success"] boolValue]) {
+        [self showUpdateMessage:@"Properties succesfully updated!" warning:NO];
+    } else {
+        [self showUpdateMessage:@"Something went wrong while updating properties!" warning:YES];
+    }
 }
 
 - (void)firmwareUpdateDidStart:(NSNotification *)notification
@@ -251,7 +255,11 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
         return;
     }
     
-    [self showUpdateMessage:@"Successfully updated firmware!" warning:NO];
+    if ([notification.userInfo[@"success"] boolValue]) {
+        [self showUpdateMessage:@"Successfully updated firmware!" warning:NO];
+    } else {
+        [self showUpdateMessage:@"Something went wrong while updating firmware!" warning:YES];
+    }
 }
 
 - (void)showUpdateMessage:(NSString *)message warning:(BOOL)isWarning

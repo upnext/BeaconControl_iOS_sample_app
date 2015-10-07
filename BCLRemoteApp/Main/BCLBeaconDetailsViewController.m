@@ -493,6 +493,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     self.selectedTrigger = BCLEventTypeEnter;
     self.vendorNameLabel.text = self.beacon.vendor ?: @"Other";
     [self reloadDistance];
+    [self markFieldsThatNeedUpdate];
 
     // kontakt.io specific fields
     BOOL isKontaktIO = self.beaconIsKontakt;
@@ -535,6 +536,39 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     self.notificationMessage = notificationMessage;
 
     self.selectedFloor = self.beacon.location.floor;
+}
+
+- (void)markFieldsThatNeedUpdate
+{
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"proximity"]) {
+        self.uuidTextField.textColor = [UIColor redAppColor];
+    } else {
+        self.uuidTextField.textColor = [UIColor blackColor];
+    }
+
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"major"]) {
+        self.majorTextField.textColor = [UIColor redAppColor];
+    } else {
+        self.majorTextField.textColor = [UIColor blackColor];
+    }
+
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"minor"]) {
+        self.minorTextField.textColor = [UIColor redAppColor];
+    } else {
+        self.minorTextField.textColor = [UIColor blackColor];
+    }
+
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"interval"]) {
+        self.signalIntervalLabel.textColor = [UIColor redAppColor];
+    } else {
+        self.signalIntervalLabel.textColor = [UIColor blackColor];
+    }
+
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"power"]) {
+        self.transmissionPowerLabel.textColor = [UIColor redAppColor];
+    } else {
+        self.transmissionPowerLabel.textColor = [UIColor blackColor];
+    }
 }
 
 - (BCLEventType)triggerFromName:(NSString *)triggerName

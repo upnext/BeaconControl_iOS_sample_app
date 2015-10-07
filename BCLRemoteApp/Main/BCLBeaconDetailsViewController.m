@@ -368,8 +368,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     NSString *name = [self.beaconNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (!name || [name isEqualToString:@""]) {
         [self presentValidationError:@"Name can't be blank!"];
-        self.beaconNameTextField.layer.borderColor = [UIColor redAppColor].CGColor;
-        self.beaconNameTextField.layer.borderWidth = 1.0;
+        self.beaconNameTextField.superview.layer.borderColor = [UIColor redAppColor].CGColor;
+        self.beaconNameTextField.superview.layer.borderWidth = 1.0;
         return NO;
     }
 

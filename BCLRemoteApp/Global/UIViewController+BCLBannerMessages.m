@@ -106,18 +106,9 @@ static char errorLabelKey;
                                       constant:-35];
         [self.view addConstraint:topConstraint];
 
-        [validationErrorView addConstraint:[NSLayoutConstraint constraintWithItem:validationErrorView
-                                                                        attribute:NSLayoutAttributeHeight
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:nil
-                                                                        attribute:NSLayoutAttributeNotAnAttribute
-                                                                       multiplier:1.0
-                                                                         constant:35.0]];
-
-
-
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.translatesAutoresizingMaskIntoConstraints = NO;
+        label.numberOfLines = 0;
         label.textColor = [UIColor whiteColor];
         [validationErrorView addSubview:label];
         [validationErrorView addConstraint:[NSLayoutConstraint constraintWithItem:label
@@ -129,6 +120,7 @@ static char errorLabelKey;
                                                                          constant:0.0]];
         views = NSDictionaryOfVariableBindings(label);
         [validationErrorView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(25)-[label]-(25)-|" options:0 metrics:nil views:views]];
+        [validationErrorView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(5)-[label]-(5)-|" options:0 metrics:nil views:views]];
 
 
         objc_setAssociatedObject(self, &errorLabelKey, label, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

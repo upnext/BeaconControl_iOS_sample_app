@@ -140,7 +140,6 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     } else {
         [self hideUpdateMessages:NO];
     }
-    
 }
 
 - (void)decreaseFontSize
@@ -272,93 +271,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (IBAction)confirmButtonPressed:(id)sender
 {
-    __weak BCLBeaconDetailsViewController *weakSelf = self;
-
-    switch (self.beaconMode) {
-
-        case kBCLBeaconModeNew:
-        {
-            if (![self validateForm]) {
-                break;
-            }
-            [self updateBeaconData];
-            [self showActivityIndicatorViewAnimated:YES];
-            
-            NSString *testActionName;
-            NSArray *testActionAttributes;
-            
-            if (self.notificationMessage) {
-                testActionName = @"Test action";
-                testActionAttributes = @[@{@"name": @"text", @"value": self.notificationMessage}];
-            }
-            
-            [self.bclManager createBeacon:self.beacon testActionName:testActionName testActionTrigger:self.selectedTrigger testActionAttributes:testActionAttributes completion:^(BCLBeacon *newBeacon, NSError *error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (!error) {
-                        weakSelf.beacon = newBeacon;
-                        if ([weakSelf.delegate respondsToSelector:@selector(beaconDetailsViewController:didSaveNewBeacon:)]) {
-                            [weakSelf.delegate beaconDetailsViewController:self didSaveNewBeacon:newBeacon];
-                        }
-                    } else {
-                        [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
-                    }
-                    [weakSelf hideActivityIndicatorViewAnimated:YES];
-                });
-            }];
-        };
-            break;
-
-        case kBCLBeaconModeEdit:
-        {
-            if (![self validateForm]) {
-                break;
-            }
-
-            BCLBeacon *beaconCopy = [self.beacon copy];
-            [self updateBeaconData:beaconCopy];
-            [self showActivityIndicatorViewAnimated:YES];
-            
-            NSString *testActionName;
-            NSMutableArray *testActionAttributes;
-            
-            if (self.notificationMessage) {
-                testActionName = @"Test action";
-                BCLAction *testAction = [[BeaconCtrlManager sharedManager] testActionForBeacon:self.beacon];
-                if (testAction) {
-                    testActionAttributes = [@[] mutableCopy];
-                    [testAction.customValues enumerateObjectsUsingBlock:^(NSDictionary *valueDict, NSUInteger idx, BOOL *stop) {
-                        [testActionAttributes addObject:@{@"name": valueDict[@"name"], @"value": [valueDict[@"name"] isEqualToString:@"text"] ? self.notificationMessage : valueDict[@"value"], @"id": valueDict[@"id"]}];
-                    }];
-                } else {
-                    testActionAttributes = [@[@{@"name": @"text", @"value": self.notificationMessage}] mutableCopy];
-                }
-            }
-            
-            [self.bclManager updateBeacon:beaconCopy testActionName:testActionName testActionTrigger:self.selectedTrigger testActionAttributes:testActionAttributes.copy completion:^(BCLBeacon *updatedBeacon, NSError *error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (!error) {
-                        weakSelf.beacon = updatedBeacon;
-                        if ([weakSelf.delegate respondsToSelector:@selector(beaconDetailsViewController:didEditBeacon:)]) {
-                            [weakSelf.delegate beaconDetailsViewController:self didEditBeacon:updatedBeacon];
-                        }
-                    } else {
-                        [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
-                    }
-                    [self hideActivityIndicatorViewAnimated:YES];
-                });
-            }];
-        };
-            break;
-
-        case kBCLBeaconModeDetails:
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure you want to delete this beacon?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-            [alertView show];
-        };
-            break;
-        default:
-            break;
-    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure you want to delete this beacon?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [alertView show];
 }
 
 - (BOOL)validateForm
@@ -419,7 +333,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 - (void)resetFormValidation
 {
     [self hideBannerView:NO];
-    self.beaconNameTextField.layer.borderWidth = 0;
+    self.beaconNameTextField.superview.layer.borderWidth = 0;
     self.uuidTextField.superview.layer.borderWidth = 0;
     self.majorTextField.superview.layer.borderWidth = 0;
     self.minorTextField.superview.layer.borderWidth = 0;
@@ -431,19 +345,89 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 {
     switch (self.beaconMode) {
         case kBCLBeaconModeNew:
+            [self saveBeacon];
             break;
         case kBCLBeaconModeEdit:
-            //cancel
-            [self updateView];
-            self.beaconMode = kBCLBeaconModeDetails;
+            [self updateBeacon];
             break;
         case kBCLBeaconModeDetails:
-            //edit
             self.beaconMode = kBCLBeaconModeEdit;
             break;
         case kBCLBeaconModeHidden:
             break;
     }
+}
+
+- (void)saveBeacon
+{
+    if (![self validateForm]) {
+        return;
+    }
+    [self updateBeaconData];
+    [self showActivityIndicatorViewAnimated:YES];
+
+    NSString *testActionName;
+    NSArray *testActionAttributes;
+
+    if (self.notificationMessage) {
+        testActionName = @"Test action";
+        testActionAttributes = @[@{@"name" : @"text", @"value" : self.notificationMessage}];
+    }
+
+    [self.bclManager createBeacon:self.beacon testActionName:testActionName testActionTrigger:self.selectedTrigger testActionAttributes:testActionAttributes completion:^(BCLBeacon *newBeacon, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                self.beacon = newBeacon;
+                if ([self.delegate respondsToSelector:@selector(beaconDetailsViewController:didSaveNewBeacon:)]) {
+                    [self.delegate beaconDetailsViewController:self didSaveNewBeacon:newBeacon];
+                }
+            } else {
+                [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
+            }
+            [self hideActivityIndicatorViewAnimated:YES];
+        });
+    }];
+}
+
+- (void)updateBeacon
+{
+    if (![self validateForm]) {
+        return;
+    }
+
+    BCLBeacon *beaconCopy = [self.beacon copy];
+    [self updateBeaconData:beaconCopy];
+    [self showActivityIndicatorViewAnimated:YES];
+
+    NSString *testActionName;
+    NSMutableArray *testActionAttributes;
+
+    if (self.notificationMessage) {
+        testActionName = @"Test action";
+        BCLAction *testAction = [[BeaconCtrlManager sharedManager] testActionForBeacon:self.beacon];
+        if (testAction) {
+            testActionAttributes = [@[] mutableCopy];
+            [testAction.customValues enumerateObjectsUsingBlock:^(NSDictionary *valueDict, NSUInteger idx, BOOL *stop) {
+                [testActionAttributes addObject:@{@"name": valueDict[@"name"], @"value": [valueDict[@"name"] isEqualToString:@"text"] ? self.notificationMessage : valueDict[@"value"], @"id": valueDict[@"id"]}];
+            }];
+        } else {
+            testActionAttributes = [@[@{@"name": @"text", @"value": self.notificationMessage}] mutableCopy];
+        }
+    }
+
+    [self.bclManager updateBeacon:beaconCopy testActionName:testActionName testActionTrigger:self.selectedTrigger testActionAttributes:testActionAttributes.copy completion:^(BCLBeacon *updatedBeacon, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
+                self.beacon = updatedBeacon;
+                if ([self.delegate respondsToSelector:@selector(beaconDetailsViewController:didEditBeacon:)]) {
+                    [self.delegate beaconDetailsViewController:self didEditBeacon:updatedBeacon];
+                }
+            } else {
+                [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
+            }
+            [self hideActivityIndicatorViewAnimated:YES];
+        });
+    }];
 }
 
 - (IBAction)zoneButtonPressed:(id)sender
@@ -670,35 +654,60 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
         case kBCLBeaconModeNew:
             self.floorTitleLabel.text = @"Floor:";
             self.floorNumberLabel.text = [NSString stringWithFormat:@"%@", self.beacon.location.floor ? : @"None"];
-            self.navigationItem.rightBarButtonItem = nil;
-            [self.confirmButton setTitle:@"Save beacon" forState:UIControlStateNormal];
-            self.confirmButton.backgroundColor = [UIColor blueAppColor];
+            self.navigationItem.rightBarButtonItem = self.barButton;
+            self.barButton.title = @"Save";
+            self.barButton.tintColor = [UIColor blueAppColor];
+            self.navigationItem.leftBarButtonItem = nil;
+            self.navigationItem.hidesBackButton = NO;
             [self setEditingEnabled:YES];
+            [self setDeleteButtonVisible:NO];
             break;
         case kBCLBeaconModeEdit:
             self.floorTitleLabel.text = @"Floor:";
             self.floorNumberLabel.text = [NSString stringWithFormat:@"%@", self.beacon.location.floor ? : @"None"];
             self.navigationItem.rightBarButtonItem = self.barButton;
-            self.barButton.title = @"Cancel";
-            [self.confirmButton setTitle:@"Save beacon" forState:UIControlStateNormal];
-            self.confirmButton.backgroundColor = [UIColor blueAppColor];
+            self.barButton.title = @"Save";
+            self.barButton.tintColor = [UIColor blueAppColor];
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
             [self setEditingEnabled:YES animated:YES];
+            [self setDeleteButtonVisible:YES];
             break;
         case kBCLBeaconModeDetails:
             self.floorTitleLabel.text = @"Floor:";
             self.floorNumberLabel.text = [NSString stringWithFormat:@"%@", self.beacon.location.floor ? : @"None"];
             self.navigationItem.rightBarButtonItem = self.barButton;
             self.barButton.title = @"Edit";
-            [self.confirmButton setTitle:@"Delete beacon" forState:UIControlStateNormal];
-            self.confirmButton.backgroundColor = [UIColor redAppColor];
+            self.barButton.tintColor = [UIColor blackColor];
+            self.navigationItem.leftBarButtonItem = nil;
+            self.navigationItem.hidesBackButton = NO;
             [self setEditingEnabled:NO animated:YES];
+            [self setDeleteButtonVisible:NO];
             break;
         case kBCLBeaconModeHidden:
             self.floorTitleLabel.text = @"Beacon:";
             self.floorNumberLabel.text = [BeaconCtrlManager sharedManager].beaconCtrl.closestBeacon.name ? : @"No beacon in range";
             self.selectedZone = [BeaconCtrlManager sharedManager].beaconCtrl.currentZone;
+            self.barButton.tintColor = [UIColor blackColor];
+            self.navigationItem.leftBarButtonItem = nil;
+            self.navigationItem.hidesBackButton = NO;
+            [self setDeleteButtonVisible:NO];
             break;
     }
+}
+
+- (void)setDeleteButtonVisible:(BOOL)visible
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.confirmButton.alpha = visible;
+        self.deleteButtonViewHeightConstraint.constant = visible ? 80 : 0;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)cancelButtonPressed
+{
+    [self updateView];
+    self.beaconMode = kBCLBeaconModeDetails;
 }
 
 - (void)setEditingEnabled:(BOOL)enabled

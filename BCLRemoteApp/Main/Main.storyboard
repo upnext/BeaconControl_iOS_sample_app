@@ -594,7 +594,7 @@
                                                     <constraint firstItem="6U4-y8-PCC" firstAttribute="leading" secondItem="W0Z-xB-Ya0" secondAttribute="leading" constant="59" id="vKU-fd-w3J"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GR8-fn-nwd">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GR8-fn-nwd">
                                                 <rect key="frame" x="0.0" y="809" width="375" height="80"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9B-m7-NAJ">

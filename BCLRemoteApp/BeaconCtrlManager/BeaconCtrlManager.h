@@ -40,6 +40,10 @@ extern NSString * const BeaconManagerFirmwareUpdateDidFinishNotification;
 
 - (void)refetchBeaconCtrlConfiguration:(void (^)(NSError *error))completion;
 
+- (void)muteAutomaticBeaconCtrlConfigurationRefresh;
+
+- (void)unmuteAutomaticBeaconCtrlConfigurationRefresh;
+
 - (void)createBeacon:(BCLBeacon *)beacon testActionName:(NSString *)testActionName testActionTrigger:(BCLEventType)trigger testActionAttributes:(NSArray *)testActionAttributes completion:(void (^)(BCLBeacon *, NSError *))completion;
 - (void)updateBeacon:(BCLBeacon *)beacon testActionName:(NSString *)testActionName testActionTrigger:(BCLEventType)trigger testActionAttributes:(NSArray *)testActionAttributes completion:(void (^)(BCLBeacon *updatedBeacon, NSError *error))completion;
 - (void)deleteBeacon:(BCLBeacon *)beacon completion:(void (^)(BOOL success, NSError *error))completion;

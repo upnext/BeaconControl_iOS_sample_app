@@ -33,6 +33,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
 @property (nonatomic) BCLBeaconCtrlPushEnvironment pushEnvironment;
 
 @property (nonatomic, readwrite) BOOL isReadyForSetup;
+@property (nonatomic, readwrite) BOOL isAutomaticBeaconCtrlRefreshMuted;
 
 @property (nonatomic, strong) NSTimer *refetchConfigurationTimer;
 
@@ -122,6 +123,16 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
             completion(error);
         }
     }];
+}
+
+- (void)muteAutomaticBeaconCtrlConfigurationRefresh
+{
+    self.isAutomaticBeaconCtrlRefreshMuted = YES;
+}
+
+- (void)unmuteAutomaticBeaconCtrlConfigurationRefresh
+{
+    self.isAutomaticBeaconCtrlRefreshMuted = NO;
 }
 
 - (void)setIsReadyForSetup:(BOOL)isReadyForSetup
@@ -530,7 +541,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
                         
                         [SSKeychain setPassword:password forService:[self keychainServiceName] account:email];
                         
-                        weakSelf.refetchConfigurationTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:weakSelf selector:@selector(refetchBeaconCtrlConfigurationTimerHandler:) userInfo:nil repeats:YES];
+                        weakSelf.refetchConfigurationTimer = [NSTimer scheduledTimerWithTimeInterval:180 target:weakSelf selector:@selector(refetchBeaconCtrlConfigurationTimerHandler:) userInfo:nil repeats:YES];
                         
                         NSError *beaconMonitoringError;
                         if (![beaconCtrl isBeaconCtrlReadyToProcessBeaconActions:&beaconMonitoringError]) {
@@ -549,6 +560,10 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
 
 - (void)refetchBeaconCtrlConfigurationTimerHandler:(NSTimer *)timer
 {
+    if (self.isAutomaticBeaconCtrlRefreshMuted) {
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     
     [self refetchBeaconCtrlConfiguration:^(NSError *error) {

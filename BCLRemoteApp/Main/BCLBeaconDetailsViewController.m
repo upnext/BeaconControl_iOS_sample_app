@@ -220,7 +220,9 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)propertiesUpdateDidEnd:(NSNotification *)notification
 {
-    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+    BCLBeacon *updatedBeacon = notification.userInfo[@"beacon"];
+    
+    if (![updatedBeacon.beaconIdentifier isEqualToString:self.beacon.beaconIdentifier]) {
         return;
     }
     
@@ -229,6 +231,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     } else {
         [self showUpdateMessage:@"Something went wrong while updating properties!" warning:YES];
     }
+    
+    [self updateView];
 }
 
 - (void)firmwareUpdateDidStart:(NSNotification *)notification
@@ -251,7 +255,9 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)firmwareUpdateDidEnd:(NSNotification *)notification
 {
-    if (![[notification.userInfo[@"beacon"] beaconIdentifier] isEqualToString:self.beacon.beaconIdentifier]) {
+    BCLBeacon *updatedBeacon = notification.userInfo[@"beacon"];
+    
+    if (![updatedBeacon.beaconIdentifier isEqualToString:self.beacon.beaconIdentifier]) {
         return;
     }
     
@@ -260,6 +266,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     } else {
         [self showUpdateMessage:@"Something went wrong while updating firmware!" warning:YES];
     }
+    
+    [self updateView];
 }
 
 - (void)showUpdateMessage:(NSString *)message warning:(BOOL)isWarning

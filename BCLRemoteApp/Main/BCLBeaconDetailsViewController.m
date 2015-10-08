@@ -204,6 +204,16 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 #pragma mark - Private
 
+- (void)hideKeyboard
+{
+    [self.beaconNameTextField resignFirstResponder];
+    [self.latitudeTextField resignFirstResponder];
+    [self.longitudeTextField resignFirstResponder];
+    [self.majorTextField resignFirstResponder];
+    [self.minorTextField resignFirstResponder];
+    [self.uuidTextField resignFirstResponder];
+}
+
 - (void)currentZoneDidChange:(NSNotification *)notification
 {
     if (self.beaconMode == kBCLBeaconModeHidden) {
@@ -381,6 +391,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     if (![self validateForm]) {
         return;
     }
+    [self hideKeyboard];
     [self updateBeaconData];
 
     [self showActivityIndicatorViewAnimated:YES];
@@ -419,6 +430,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
         return;
     }
 
+    [self hideKeyboard];
     BCLBeacon *beaconCopy = [self.beacon copy];
     [self updateBeaconData:beaconCopy];
     [self showActivityIndicatorViewAnimated:YES];

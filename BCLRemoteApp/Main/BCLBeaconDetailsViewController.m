@@ -508,7 +508,6 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     self.selectedTrigger = BCLEventTypeEnter;
     self.vendorNameLabel.text = self.beacon.vendor ?: @"Other";
     [self reloadDistance];
-    [self markFieldsThatNeedUpdate];
 
     // kontakt.io specific fields
     BOOL isKontaktIO = self.beaconIsKontakt;
@@ -540,6 +539,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     self.deviceIDLabel.text = self.beacon.vendorIdentifier;
     self.transmissionPowerLabel.text = [NSString stringWithFormat:@"%d", self.beacon.transmissionPower];
     self.signalIntervalLabel.text = [NSString stringWithFormat:@"%d", self.beacon.transmissionInterval];
+    [self markFieldsThatNeedUpdate];
 
 
     NSString *notificationMessage;
@@ -582,16 +582,33 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     }
 
     if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"interval"]) {
-        self.signalIntervalLabel.textColor = [UIColor redAppColor];
-    } else {
-        self.signalIntervalLabel.textColor = [UIColor blackColor];
+        self.signalIntervalLabel.attributedText = [self attributedStringWithValue:[NSString stringWithFormat:@"%d", self.beacon.transmissionInterval] updatedValue:self.beacon.fieldsToUpdate[@"interval"]];
     }
 
     if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"power"]) {
-        self.transmissionPowerLabel.textColor = [UIColor redAppColor];
-    } else {
-        self.transmissionPowerLabel.textColor = [UIColor blackColor];
+        self.transmissionPowerLabel.attributedText = [self attributedStringWithValue:[NSString stringWithFormat:@"%d", self.beacon.transmissionPower] updatedValue:self.beacon.fieldsToUpdate[@"power"]];
     }
+}
+
+- (NSAttributedString *)attributedStringWithValue:(NSString *)value updatedValue:(NSString *)updatedValue
+{
+    NSMutableAttributedString *attributedString = [NSMutableAttributedString new];
+
+    NSDictionary *redTextAttributes = @{
+            NSForegroundColorAttributeName : [UIColor redAppColor]
+    };
+
+    NSDictionary *blackTextAttributes = @{
+            NSForegroundColorAttributeName : [UIColor blackColor]
+    };
+
+    [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:value
+                                                                             attributes:redTextAttributes]];
+
+    [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%@)", updatedValue]
+                                                                             attributes:blackTextAttributes]];
+
+    return [attributedString copy];
 }
 
 - (BCLEventType)triggerFromName:(NSString *)triggerName

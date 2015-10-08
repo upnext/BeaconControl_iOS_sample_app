@@ -119,6 +119,8 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
             [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerDidFetchBeaconCtrlConfigurationNotification object:weakSelf];
         }
         
+        [weakSelf.beaconCtrl updateMonitoredBeacons];
+        
         if (completion) {
             completion(error);
         }
@@ -571,8 +573,6 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
             // TODO: Handle error!
             return;
         }
-
-        [weakSelf.beaconCtrl updateMonitoredBeacons];
     }];
 }
 

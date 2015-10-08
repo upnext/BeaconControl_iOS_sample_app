@@ -543,31 +543,31 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)markFieldsThatNeedUpdate
 {
-    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"proximity"]) {
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"proximity"]) {
         self.uuidTextField.textColor = [UIColor redAppColor];
     } else {
         self.uuidTextField.textColor = [UIColor blackColor];
     }
 
-    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"major"]) {
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"major"]) {
         self.majorTextField.textColor = [UIColor redAppColor];
     } else {
         self.majorTextField.textColor = [UIColor blackColor];
     }
 
-    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"minor"]) {
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"minor"]) {
         self.minorTextField.textColor = [UIColor redAppColor];
     } else {
         self.minorTextField.textColor = [UIColor blackColor];
     }
 
-    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"interval"]) {
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"interval"]) {
         self.signalIntervalLabel.textColor = [UIColor redAppColor];
     } else {
         self.signalIntervalLabel.textColor = [UIColor blackColor];
     }
 
-    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate containsObject:@"power"]) {
+    if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"power"]) {
         self.transmissionPowerLabel.textColor = [UIColor redAppColor];
     } else {
         self.transmissionPowerLabel.textColor = [UIColor blackColor];

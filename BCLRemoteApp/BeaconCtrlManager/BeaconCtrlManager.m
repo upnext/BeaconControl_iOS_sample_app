@@ -541,7 +541,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
                         
                         [SSKeychain setPassword:password forService:[self keychainServiceName] account:email];
                         
-                        weakSelf.refetchConfigurationTimer = [NSTimer scheduledTimerWithTimeInterval:180 target:weakSelf selector:@selector(refetchBeaconCtrlConfigurationTimerHandler:) userInfo:nil repeats:YES];
+                        weakSelf.refetchConfigurationTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:weakSelf selector:@selector(refetchBeaconCtrlConfigurationTimerHandler:) userInfo:nil repeats:YES];
                         
                         NSError *beaconMonitoringError;
                         if (![beaconCtrl isBeaconCtrlReadyToProcessBeaconActions:&beaconMonitoringError]) {

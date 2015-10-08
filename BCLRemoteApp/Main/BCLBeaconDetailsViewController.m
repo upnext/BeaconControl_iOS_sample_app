@@ -134,6 +134,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
     
     if (self.beacon) {
         [self showUpdateMessages:NO];
@@ -340,9 +342,9 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)presentValidationError:(NSString *)errorMessage
 {
-    self.confirmButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     [self presentValidationError:errorMessage completion:^(BOOL finished) {
-        self.confirmButton.enabled = YES;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }];
 }
 
@@ -380,7 +382,10 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
         return;
     }
     [self updateBeaconData];
+
     [self showActivityIndicatorViewAnimated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
 
     NSString *testActionName;
     NSArray *testActionAttributes;
@@ -400,6 +405,9 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
             } else {
                 [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
             }
+
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            self.navigationItem.leftBarButtonItem.enabled = YES;
             [self hideActivityIndicatorViewAnimated:YES];
         });
     }];
@@ -414,6 +422,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     BCLBeacon *beaconCopy = [self.beacon copy];
     [self updateBeaconData:beaconCopy];
     [self showActivityIndicatorViewAnimated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
 
     NSString *testActionName;
     NSMutableArray *testActionAttributes;
@@ -442,6 +452,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
                 [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
             }
             [self hideActivityIndicatorViewAnimated:YES];
+            self.navigationItem.rightBarButtonItem.enabled = YES;
+            self.navigationItem.leftBarButtonItem.enabled = YES;
         });
     }];
 }
@@ -543,6 +555,14 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)markFieldsThatNeedUpdate
 {
+    if (self.beacon.needsFirmwareUpdate) {
+        self.firmwareVersionBGView.backgroundColor = [UIColor redAppColor];
+        self.firmwareVersionLabel.textColor = [UIColor whiteColor];
+    } else {
+        self.firmwareVersionBGView.backgroundColor = [UIColor whiteColor];
+        self.firmwareVersionLabel.textColor = [UIColor blackColor];
+    }
+
     if (self.beaconIsKontakt && [self.beacon.fieldsToUpdate.allKeys containsObject:@"proximity"]) {
         self.uuidTextField.textColor = [UIColor redAppColor];
     } else {
@@ -676,8 +696,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
             self.navigationItem.rightBarButtonItem = self.barButton;
             self.barButton.title = @"Save";
             self.barButton.tintColor = [UIColor blueAppColor];
-            self.navigationItem.leftBarButtonItem = nil;
-            self.navigationItem.hidesBackButton = NO;
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
             [self setEditingEnabled:YES];
             [self setDeleteButtonVisible:NO];
             break;
@@ -725,8 +744,17 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)cancelButtonPressed
 {
-    [self updateView];
-    self.beaconMode = kBCLBeaconModeDetails;
+    switch (self.beaconMode) {
+        case kBCLBeaconModeNew:
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        case kBCLBeaconModeEdit:
+            [self updateView];
+            self.beaconMode = kBCLBeaconModeDetails;
+            break;
+        case kBCLBeaconModeDetails:break;
+        case kBCLBeaconModeHidden:break;
+    }
 }
 
 - (void)setEditingEnabled:(BOOL)enabled
@@ -827,6 +855,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     __weak BCLBeaconDetailsViewController *weakSelf = self;
     if (buttonIndex == 1) {
         [self showActivityIndicatorViewAnimated:YES];
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.navigationItem.leftBarButtonItem.enabled = NO;
         [self.bclManager deleteBeacon:self.beacon completion:^(BOOL success, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (success) {
@@ -837,6 +867,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
                     [[AlertControllerManager sharedManager] presentError:error inViewController:self completion:nil];
                 }
                 [self hideActivityIndicatorViewAnimated:YES];
+                self.navigationItem.rightBarButtonItem.enabled = YES;
+                self.navigationItem.leftBarButtonItem.enabled = YES;
             });
         }];
     }

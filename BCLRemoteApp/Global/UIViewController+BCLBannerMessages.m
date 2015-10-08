@@ -23,7 +23,7 @@ static char errorLabelKey;
 {
     if (self.bannerView) {
         self.bannerViewLabel.text = errorMessage;
-        [self showBannerViewAnimated:YES duration:@(2.0) completion:nil];
+        [self showBannerViewAnimated:YES duration:@(2.0) completion:completion];
     }
 }
 
@@ -33,7 +33,7 @@ static char errorLabelKey;
         [self hideBannerView:NO];
         self.bannerViewLabel.text = message;
         self.bannerView.backgroundColor = isWarning ? [UIColor redAppColor] : [UIColor greenAppColor];
-        [self showBannerViewAnimated:animated duration:nil completion:nil];
+        [self showBannerViewAnimated:animated duration:nil completion:completion];
     }
 }
 
@@ -107,17 +107,10 @@ static char errorLabelKey;
         [self.view addConstraint:topConstraint];
 
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-        label.translatesAutoresizingMaskIntoConstraints = NO;
         label.numberOfLines = 0;
+        label.translatesAutoresizingMaskIntoConstraints = NO;
         label.textColor = [UIColor whiteColor];
         [validationErrorView addSubview:label];
-        [validationErrorView addConstraint:[NSLayoutConstraint constraintWithItem:label
-                                                                        attribute:NSLayoutAttributeCenterY
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:validationErrorView
-                                                                        attribute:NSLayoutAttributeCenterY
-                                                                       multiplier:1.0
-                                                                         constant:0.0]];
         views = NSDictionaryOfVariableBindings(label);
         [validationErrorView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(25)-[label]-(25)-|" options:0 metrics:nil views:views]];
         [validationErrorView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(5)-[label]-(5)-|" options:0 metrics:nil views:views]];

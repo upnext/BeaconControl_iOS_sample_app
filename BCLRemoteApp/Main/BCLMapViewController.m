@@ -360,6 +360,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
                 break;
             case kBCLMapViewControllerStateBeaconSelected:
             {
+                [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
                 if (!self.pinView.hidden && self.currentlyEditedBeacon) {
                     [self.mapView addAnnotation:self.mapView.selectedAnnotation];
                 }
@@ -385,6 +386,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
                 break;
             case kBCLMapViewControllerStateNewBeacon:
             {
+                [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
                 if (self.currentlyEditedBeacon) {
                     [self.addButton setImage:[UIImage imageNamed:@"ok_mapbtn"] forState:UIControlStateNormal];
                 } else {
@@ -397,6 +399,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
             };
                 break;
             case kBCLMapViewControllerStateShowsBeaconDetails: {
+                [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
                 self.beaconDetailsConstraint.constant = self.view.bounds.size.height;
                 self.addButton.transform = CGAffineTransformMakeRotation(3*M_PI_2);
                 self.buttonsDistanceConstraint.constant = 0.0;
@@ -410,6 +413,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
         if (state == _state && finished) {
             switch (state) {
                 case kBCLMapViewControllerStateNormal:
+                    [self.beaconCtrlManager unmuteAutomaticBeaconCtrlConfigurationRefresh];
                     self.currentlyAddedBeacon = nil;
                     self.currentlyEditedBeacon = nil;
                     self.beaconDetailsViewController.view.userInteractionEnabled = NO;

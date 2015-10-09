@@ -289,7 +289,8 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
         };
             break;
 
-        case kBCLMapViewControllerStateNewBeacon: {
+        case kBCLMapViewControllerStateNewBeacon:
+        {
             CGPoint pinPoint = [self.mapView convertPoint:self.pinView.center fromView:self.view];
             CLLocationCoordinate2D coordinate2D = [self.mapView pixelToCoordinate:pinPoint];
             CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate2D.latitude longitude:coordinate2D.longitude];
@@ -332,7 +333,8 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
         }
             break;
 
-        case kBCLMapViewControllerStateShowsBeaconDetails: {
+        case kBCLMapViewControllerStateShowsBeaconDetails:
+        {
 
         };
             break;

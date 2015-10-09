@@ -68,6 +68,7 @@ static NSString *const BCLShowVendorChoiceSegueIdentifier = @"showVendorChoiceSe
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signalIntervalViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transmissionPowerViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonViewHeightConstraint;
+@property (nonatomic) BOOL isShowingUpdateMessage;
 @property (nonatomic) BOOL editingEnabled;
 
 @property (nonatomic) NSNumber *selectedFloor;
@@ -131,6 +132,18 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+        UIViewController *topViewController = self.navigationController.topViewController;
+        if (topViewController == self && self.isShowingUpdateMessage) {
+            self.scrollView.contentInset = UIEdgeInsetsMake(self.bannerView.bounds.size.height, 0, 0, 0);
+            self.scrollView.contentOffset = CGPointMake(0, -self.scrollView.contentInset.top);
+        }
+    }];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -179,9 +192,11 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
         } else {
             [self updateView];
         }
-        
-        [self.scrollView setContentInset:UIEdgeInsetsZero];
-        [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+
+        [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+            [self.scrollView setContentInset:UIEdgeInsetsZero];
+            [self.scrollView setContentOffset:CGPointZero];
+        }];
     }
     
     [super viewWillDisappear:animated];
@@ -287,6 +302,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     UIViewController *topViewController = self.navigationController.topViewController;
     
     [topViewController presentMessage:message animated:NO warning:isWarning completion:nil];
+    self.isShowingUpdateMessage = YES;
 }
 
 - (void)closestBeaconDidChange:(NSNotification *)notification
@@ -644,7 +660,8 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 {
     if (self.beacon) {
         UIViewController *topViewController = self.navigationController.topViewController;
-        
+
+        self.isShowingUpdateMessage = YES;
         if (self.beacon.characteristicsAreBeingUpdated) {
             [topViewController presentMessage:@"Updating beacon's properties..." animated:animated warning:YES completion:nil];
         } else if (self.beacon.needsCharacteristicsUpdate) {
@@ -662,8 +679,15 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 - (void)hideUpdateMessages:(BOOL)animated
 {
     UIViewController *topViewController = self.navigationController.topViewController;
-    
     [topViewController hideBannerView:animated];
+    self.isShowingUpdateMessage = NO;
+
+    if (topViewController == self) {
+        [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
+            self.scrollView.contentInset = UIEdgeInsetsZero;
+            self.scrollView.contentOffset = CGPointZero;
+        }];
+    }
 }
 
 #pragma mark - Accessors

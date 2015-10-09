@@ -138,7 +138,16 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
         UIViewController *topViewController = self.navigationController.topViewController;
         if (topViewController == self && self.isShowingUpdateMessage) {
-            self.scrollView.contentInset = UIEdgeInsetsMake(self.bannerView.bounds.size.height, 0, 0, 0);
+            NSInteger previousViewControllerIndex = self.navigationController.viewControllers.count - 2;
+            UIView *bannerView;
+            if (previousViewControllerIndex >= 0) {
+                UIViewController *previousViewController = self.navigationController.viewControllers[previousViewControllerIndex];
+                bannerView = previousViewController.bannerView;
+            } else {
+                bannerView = self.bannerView;
+            }
+            
+            self.scrollView.contentInset = UIEdgeInsetsMake(bannerView.bounds.size.height, 0, 0, 0);
             self.scrollView.contentOffset = CGPointMake(0, -self.scrollView.contentInset.top);
         }
     }];

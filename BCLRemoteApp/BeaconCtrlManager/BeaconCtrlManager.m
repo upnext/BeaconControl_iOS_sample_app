@@ -397,7 +397,18 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
 
 - (void)beaconsPropertiesUpdateDidFinish:(BCLBeacon *)beacon success:(BOOL)success
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerPropertiesUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(success)}];
+    [self.beaconCtrlAdmin syncBeacon:beacon completion:^(NSError *error) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^() {
+                [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerPropertiesUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(NO)}];
+            });
+            return;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^() {
+            [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerPropertiesUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(YES)}];
+        });
+    }];
 }
 
 - (void)beaconsFirmwareUpdateDidStart:(BCLBeacon *)beacon
@@ -412,7 +423,14 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
 
 - (void)beaconsFirmwareUpdateDidFinish:(BCLBeacon *)beacon success:(BOOL)success
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerFirmwareUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(success)}];
+    [self.beaconCtrlAdmin syncBeacon:beacon completion:^(NSError *error) {
+        if (error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerFirmwareUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(NO)}];
+            return;
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerFirmwareUpdateDidFinishNotification object:self userInfo:@{@"beacon": beacon, @"success": @(YES)}];
+    }];
 }
 
 #pragma mark - Private

@@ -17,6 +17,8 @@ static char validationErrorViewKey;
 static char topConstraintKey;
 static char errorLabelKey;
 
+NSString *const BCLBannerViewWillHideNotification = @"bcl.bannerViewWillHide";
+
 @implementation UIViewController (BCLValidationErrors)
 
 - (void)presentValidationError:(NSString *)errorMessage completion:(void(^)(BOOL))completion
@@ -42,17 +44,15 @@ static char errorLabelKey;
     __weak typeof(self) weakSelf = self;
     
     void (^finalCompletion)(BOOL finished) = ^void(BOOL finished) {
-        if (completion) {
-            completion(finished);
-        }
-        
         if (duration) {
             [weakSelf performSelector:@selector(hideAnimation:) withObject:completion afterDelay:duration.floatValue];
+        } else if (completion) {
+            completion(finished);
         }
     };
     
     self.bannerView.hidden = NO;
-    [UIView animateWithDuration:animated?0.5:0.0 animations:^{
+    [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
         self.bannerViewTopConstraint.constant = 0.0;
         [self.view layoutIfNeeded];
     } completion:finalCompletion];
@@ -60,6 +60,7 @@ static char errorLabelKey;
 
 - (void)hideBannerViewAnimated:(BOOL)animated completion:(void(^)(BOOL))completion
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:BCLBannerViewWillHideNotification object:nil];
     if (!animated) {
         self.bannerViewTopConstraint.constant = -35;
         self.bannerView.hidden = YES;

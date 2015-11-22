@@ -37,8 +37,8 @@
 		756D536C1B3B0E7B0062F3BB /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 756D536B1B3B0E7B0062F3BB /* LICENSE.txt */; };
 		758A3DA61B050F0700645DE6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758A3DA51B050F0700645DE6 /* MapKit.framework */; };
 		75B113B51B49CFCB00289368 /* BCLChooseTriggerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B113B41B49CFCB00289368 /* BCLChooseTriggerViewController.m */; };
-		AF5A40B81BC2EB470044C486 /* BCLVendorChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A40B71BC2EB470044C486 /* BCLVendorChoiceViewController.m */; settings = {ASSET_TAGS = (); }; };
-		AF5A40BB1BC2FC5A0044C486 /* BCLVendorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A40BA1BC2FC5A0044C486 /* BCLVendorCell.m */; settings = {ASSET_TAGS = (); }; };
+		AF5A40B81BC2EB470044C486 /* BCLVendorChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A40B71BC2EB470044C486 /* BCLVendorChoiceViewController.m */; };
+		AF5A40BB1BC2FC5A0044C486 /* BCLVendorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A40BA1BC2FC5A0044C486 /* BCLVendorCell.m */; };
 		AF6E0DB91B4D580100E07918 /* SystemSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */; };
 		AF6E0DBC1B4D584300E07918 /* BCLSystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */; };
 		AF7B68381B4BFED9004027D7 /* BCLTriggerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */; };
@@ -526,7 +526,6 @@
 			baseConfigurationReference = 9D314D2116E5D7F0F6A46696 /* Pods-BCLRemoteApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -544,7 +543,6 @@
 			baseConfigurationReference = 56C198B79D11059B32070109 /* Pods-BCLRemoteApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Upnext Technologies sp. z o.o. (WWKF65T5X4)";
 				ENABLE_BITCODE = NO;

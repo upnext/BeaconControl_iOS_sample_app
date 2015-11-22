@@ -1199,7 +1199,7 @@
                                     <constraint firstAttribute="height" priority="900" constant="166" id="LNw-Dw-4IS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="wY9-YM-pgp" id="PgJ-jP-tIp"/>
                                 </connections>
@@ -1231,13 +1231,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trigger" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ip7-Yy-PTO">
-                                <rect key="frame" x="25" y="247" width="61" height="22"/>
+                                <rect key="frame" x="25" y="247.5" width="60.5" height="21.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On Hello" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chI-Gm-4QG">
-                                <rect key="frame" x="249" y="247" width="70" height="22"/>
+                                <rect key="frame" x="249.5" y="247.5" width="69.5" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1271,7 +1271,7 @@
                             <constraint firstAttribute="trailing" secondItem="paJ-zo-efe" secondAttribute="trailing" id="h1M-Oc-xeg"/>
                             <constraint firstItem="chI-Gm-4QG" firstAttribute="leading" secondItem="kQa-US-tHn" secondAttribute="trailing" constant="-123.5" id="iTb-VU-Z2P"/>
                             <constraint firstItem="Ip7-Yy-PTO" firstAttribute="leading" secondItem="LVK-8r-GdS" secondAttribute="leading" constant="25" id="qIl-Ye-297"/>
-                            <constraint firstItem="Aq7-0v-Vg2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uIV-C2-dT4" secondAttribute="bottom" constant="260" id="qmX-dh-5H1"/>
+                            <constraint firstItem="Aq7-0v-Vg2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uIV-C2-dT4" secondAttribute="bottom" constant="300" id="qmX-dh-5H1"/>
                             <constraint firstItem="kQa-US-tHn" firstAttribute="leading" secondItem="LVK-8r-GdS" secondAttribute="leadingMargin" id="sSM-P9-ztC"/>
                             <constraint firstItem="chI-Gm-4QG" firstAttribute="trailing" secondItem="kQa-US-tHn" secondAttribute="trailing" constant="20" id="tF6-ef-48n"/>
                             <constraint firstItem="paJ-zo-efe" firstAttribute="leading" secondItem="LVK-8r-GdS" secondAttribute="leading" id="uph-hV-WN1"/>

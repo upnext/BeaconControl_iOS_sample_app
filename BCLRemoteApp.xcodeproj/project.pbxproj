@@ -544,14 +544,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Upnext Technologies sp. z o.o. (WWKF65T5X4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/BCLRemoteApp/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.upnext.beaconctrl;
 				PRODUCT_NAME = BCLRemoteApp;
-				PROVISIONING_PROFILE = "6ffba08d-14c6-44de-a1b2-21eefd5d1b51";
+				PROVISIONING_PROFILE = "c72e83d0-15fc-487e-b9c1-f0c842337a97";
 			};
 			name = Release;
 		};

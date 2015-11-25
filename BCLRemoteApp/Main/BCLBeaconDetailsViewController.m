@@ -194,6 +194,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [self hideKeyboard];
     [self resetFormValidation];
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         if (self.beaconMode == kBCLBeaconModeNew) {
@@ -236,6 +237,16 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     [self.majorTextField resignFirstResponder];
     [self.minorTextField resignFirstResponder];
     [self.uuidTextField resignFirstResponder];
+}
+
+- (BOOL)hideKeyboardIfNeeded
+{
+    if ([self showingKeyboard]) {
+        [self hideKeyboard];
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)currentZoneDidChange:(NSNotification *)notification
@@ -691,13 +702,25 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 
     if (topViewController == self) {
         [UIView animateWithDuration:animated ? 0.5 : 0.0 animations:^{
-            self.scrollView.contentInset = UIEdgeInsetsZero;
+            UIEdgeInsets contentInset = self.scrollView.contentInset;
+            contentInset.top = 0;
+            self.scrollView.contentInset = contentInset;
             self.scrollView.contentOffset = CGPointZero;
         }];
     }
 }
 
 #pragma mark - Accessors
+
+- (BOOL)showingKeyboard
+{
+   return  [self.beaconNameTextField isFirstResponder] ||
+    [self.latitudeTextField isFirstResponder] ||
+    [self.longitudeTextField isFirstResponder] ||
+    [self.majorTextField isFirstResponder] ||
+    [self.minorTextField isFirstResponder] ||
+    [self.uuidTextField isFirstResponder];
+}
 
 - (BOOL)beaconIsKontakt
 {
@@ -806,7 +829,9 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 {
     switch (self.beaconMode) {
         case kBCLBeaconModeNew:
-            [self.navigationController popViewControllerAnimated:YES];
+            if (![self hideKeyboardIfNeeded]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             break;
         case kBCLBeaconModeEdit:
             [self updateView];
@@ -962,7 +987,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(nullable id)sender
 {
     if ([identifier isEqualToString:BCLShowVendorChoiceSegueIdentifier]) {
-        return (self.editingEnabled && !self.beaconIsKontakt);
+        return (self.editingEnabled && !self.beaconIsKontakt && ![self hideKeyboardIfNeeded]);
     }
 
     return YES;

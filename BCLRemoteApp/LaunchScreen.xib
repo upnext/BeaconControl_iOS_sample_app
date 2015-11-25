@@ -14,7 +14,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZS-bI-Hce">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="login_logo" translatesAutoresizingMaskIntoConstraints="NO" id="1UX-9f-juj">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_logo" translatesAutoresizingMaskIntoConstraints="NO" id="1UX-9f-juj">
                             <rect key="frame" x="40" y="255" width="241" height="59"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="59" id="ivg-2q-Uf8"/>

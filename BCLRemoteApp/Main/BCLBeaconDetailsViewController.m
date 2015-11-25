@@ -512,9 +512,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
     beacon.minor = [self isEmptyString:self.minorTextField.text] ? nil : @([self.minorTextField.text floatValue]);
     beacon.major = [self isEmptyString:self.majorTextField.text] ? nil : @([self.majorTextField.text floatValue]);
     beacon.location = [[BCLLocation alloc] initWithLocation:[[CLLocation alloc] initWithLatitude:[self.latitudeTextField.text floatValue] longitude:[self.longitudeTextField.text floatValue]] floor:self.selectedFloor];
-    if (![self.vendorNameLabel.text isEqualToString:@"Kontakt"] && ![self.vendorNameLabel.text isEqualToString:@"Other"]) {
-        beacon.vendor = [self isEmptyString:self.vendorNameLabel.text] ? nil : self.vendorNameLabel.text;
-    }
+    beacon.vendor = [self isEmptyString:self.vendorNameLabel.text] ? nil : self.vendorNameLabel.text;
     [beacon.zone.beacons removeObject:self.beacon];
     beacon.zone = self.selectedZone;
     [beacon.zone.beacons addObject:self.beacon];

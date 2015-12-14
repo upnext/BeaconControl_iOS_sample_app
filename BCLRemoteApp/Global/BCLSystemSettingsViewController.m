@@ -10,6 +10,7 @@
 #import "BCLBeaconCtrl.h"
 
 @interface BCLSystemSettingsViewController ()
+
 @property (weak, nonatomic) IBOutlet UIImageView *locationStatusImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *bgAppRefreshStatusImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *bluetoothStatusImageView;
@@ -39,6 +40,11 @@
 - (IBAction)showSettingsButtonPressed:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+}
+
+- (IBAction)skipButtonPressed:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)setError:(NSError *)error

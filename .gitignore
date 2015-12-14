@@ -25,7 +25,9 @@ build/
 *.dep
 
 # Cocoapods
-# Pods
+*.xcworkspace
+Pods
+Podfile.lock
 
 # AppCode specific files
 .idea/

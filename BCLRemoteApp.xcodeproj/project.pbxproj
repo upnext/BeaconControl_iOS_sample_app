@@ -301,6 +301,7 @@
 				AF7A1A4B1AF7ACAD0091DFF7 /* Frameworks */,
 				AF7A1A4C1AF7ACAD0091DFF7 /* Resources */,
 				030E5AAB9789D09E3D9A2C5F /* Copy Pods Resources */,
+				3B51988D0E0BDDE4D3538BF8 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -385,6 +386,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3B51988D0E0BDDE4D3538BF8 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A4167EA327499F3735B077DF /* Check Pods Manifest.lock */ = {

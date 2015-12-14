@@ -57,6 +57,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 @property (nonatomic) BOOL showsNoneZone;
 @property (nonatomic) NSNumber *floor;
 @property(nonatomic) BOOL needsReload;
+@property(nonatomic) BOOL didVerifySystemSettings;
 @end
 
 @implementation BCLMapViewController
@@ -101,8 +102,11 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    delegate.shouldVerifySystemSettings = YES;
+    if (!self.didVerifySystemSettings) {
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        delegate.shouldVerifySystemSettings = YES;
+        self.didVerifySystemSettings = YES;
+    }
 }
 
 - (void)setNeedsReload

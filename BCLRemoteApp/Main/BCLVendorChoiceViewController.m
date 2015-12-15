@@ -11,16 +11,16 @@
 
 #import "BCLVendorChoiceViewController.h"
 #import "BCLVendorCell.h"
+#import "BCLBeaconCtrlAdmin.h"
+#import "BeaconCtrlManager.h"
+#import "UIViewController+BCLActivityIndicator.h"
 
 @interface BCLVendorChoiceViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic) NSUInteger selectedVendorIndex;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSArray *vendors;
 
 @end
-
-static NSArray *_vendors;
-static const NSUInteger BCLKontaktVendorIndex = 7;
 
 @implementation BCLVendorChoiceViewController
 
@@ -28,37 +28,51 @@ static const NSUInteger BCLKontaktVendorIndex = 7;
 {
     [super viewDidLoad];
     self.tableView.tableFooterView = [UIView new];
+    [self fetchVendors];
 }
 
-- (NSArray *)vendors
+- (void)fetchVendors
 {
-    if (!_vendors) {
-        _vendors = @[
-                @"Other",
-                @"BlueCats",
-                @"BlueSense",
-                @"Estimote",
-                @"Gelo",
-                @"Glimworm",
-                @"Gimbal by Qualcomm",
-                @"Kontakt (Use Admin Panel)",
-                @"Sensorberg",
-                @"Sonic Notify"
-        ];
-    }
+    [self showActivityIndicatorViewAnimated:YES];
+    __weak typeof(self) weakSelf = self;
+    [[BeaconCtrlManager sharedManager].beaconCtrlAdmin fetchVendors:^(NSArray *array, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf hideActivityIndicatorViewAnimated:YES];
+            if (!error) {
+                weakSelf.vendors = array;
+                [weakSelf.tableView reloadData];
+            } else {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"Failed to get vendors list" preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"Retry" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [weakSelf fetchVendors];
+                }]];
 
-    return _vendors;
+                [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    [weakSelf cancelButtonPressed:weakSelf];
+                }]];
+
+                [weakSelf presentViewController:alertController animated:YES completion:nil];
+            }
+        });
+    }];
 }
 
 - (void)setSelectedVendor:(NSString *)selectedVendor
 {
     _selectedVendor = selectedVendor;
-    NSUInteger vendorIndex = [self.vendors indexOfObject:selectedVendor];
+}
+
+- (NSUInteger)selectedVendorIndex
+{
+    NSUInteger vendorIndex = [self.vendors indexOfObject:self.selectedVendor];
     if (vendorIndex == NSNotFound) {
-        vendorIndex = self.vendors.count - 1;
+        vendorIndex = [self.vendors indexOfObject:@"Other"];
+        if (vendorIndex == NSNotFound) {
+            vendorIndex = 0;
+        }
     }
 
-    self.selectedVendorIndex = vendorIndex;
+    return vendorIndex;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -70,17 +84,26 @@ static const NSUInteger BCLKontaktVendorIndex = 7;
 {
     NSString *vendorName = self.vendors[(NSUInteger) indexPath.row];
     BCLVendorCell *vendorCell = (BCLVendorCell *) [tableView dequeueReusableCellWithIdentifier:@"vendorCell"];
+    vendorCell.active = [self indexPathShouldBeSelectable:indexPath];
+    if (!vendorCell.active) {
+        vendorName = [vendorName stringByAppendingString:@" (Use Admin Panel)"];
+    }
     [vendorCell setVendorName:vendorName selected:(self.selectedVendorIndex == indexPath.row)];
-    vendorCell.active = indexPath.row != BCLKontaktVendorIndex;
     return vendorCell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row != BCLKontaktVendorIndex) {
+    if ([self indexPathShouldBeSelectable:indexPath]) {
         self.selectedVendor = self.vendors[indexPath.row];
         [tableView reloadData];
     }
+}
+
+- (BOOL)indexPathShouldBeSelectable:(NSIndexPath *)indexPath
+{
+    NSString *vendorName = self.vendors[(NSUInteger) indexPath.row];
+    return ![[vendorName lowercaseString] isEqualToString:@"kontakt"];
 }
 
 - (IBAction)doneButtonPressed:(id)sender

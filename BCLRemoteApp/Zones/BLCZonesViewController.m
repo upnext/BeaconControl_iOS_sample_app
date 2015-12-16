@@ -299,7 +299,7 @@ static NSString *kBCLStoryboardName = @"Zones";
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ( updatedZone == nil) {
                     zoneToUpdate.name = originName;
-                    NSString * message = [NSString stringWithFormat:@"Error occured while updating zone: %@", error.domain];
+                    NSString * message = [NSString stringWithFormat:@"An error occured while updating zone. Please try again later"];
                     UIAlertView * errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [errorAlertView show];
                 }

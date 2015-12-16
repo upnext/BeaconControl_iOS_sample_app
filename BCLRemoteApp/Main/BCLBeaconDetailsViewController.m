@@ -151,6 +151,10 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
             self.scrollView.contentOffset = CGPointMake(0, -self.scrollView.contentInset.top);
         }
     }];
+    
+    if (self.beaconMode == kBCLBeaconModeNew) {
+        [self setEditingEnabled:[self.parentViewController isKindOfClass:[UINavigationController class]] animated:YES];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -780,7 +784,7 @@ static const NSUInteger BCLKontaktEditableTextFieldBGTag = 24;
             self.barButton.title = @"Save";
             self.barButton.tintColor = [UIColor blueAppColor];
             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
-            [self setEditingEnabled:YES];
+            [self setEditingEnabled:[self.parentViewController isKindOfClass:[UINavigationController class]]];
             [self setDeleteButtonVisible:NO];
             break;
         case kBCLBeaconModeEdit:

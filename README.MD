@@ -1,3 +1,3 @@
-This is a sample application that presents the capabilities of BeaconCtrl.
+This is a sample application that presents the capabilities of BeaconControl.
 
-For further information visit  https://www.beaconctrl.com/dev
+For further information visit  https://beaconcontrol.io/dev/

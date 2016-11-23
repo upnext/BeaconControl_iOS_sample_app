@@ -42,6 +42,7 @@
 		AF6E0DB91B4D580100E07918 /* SystemSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF6E0DB81B4D580100E07918 /* SystemSettingsViewController.xib */; };
 		AF6E0DBC1B4D584300E07918 /* BCLSystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6E0DBB1B4D584300E07918 /* BCLSystemSettingsViewController.m */; };
 		AF7B68381B4BFED9004027D7 /* BCLTriggerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */; };
+		BA4D1AD51DDE487200FA295D /* BCLAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4D1AD41DDE487200FA295D /* BCLAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,8 @@
 		AF7A1A4E1AF7ACAD0091DFF7 /* BCLRemoteApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCLRemoteApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7B68361B4BFED9004027D7 /* BCLTriggerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLTriggerTableViewCell.h; path = BCLRemoteApp/Main/BCLTriggerTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		AF7B68371B4BFED9004027D7 /* BCLTriggerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLTriggerTableViewCell.m; path = BCLRemoteApp/Main/BCLTriggerTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		BA4D1AD31DDE487200FA295D /* BCLAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCLAnnotation.h; path = BCLRemoteApp/Main/BCLAnnotation.h; sourceTree = SOURCE_ROOT; };
+		BA4D1AD41DDE487200FA295D /* BCLAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCLAnnotation.m; path = BCLRemoteApp/Main/BCLAnnotation.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +270,8 @@
 				AF5A40B71BC2EB470044C486 /* BCLVendorChoiceViewController.m */,
 				AF5A40B91BC2FC5A0044C486 /* BCLVendorCell.h */,
 				AF5A40BA1BC2FC5A0044C486 /* BCLVendorCell.m */,
+				BA4D1AD31DDE487200FA295D /* BCLAnnotation.h */,
+				BA4D1AD41DDE487200FA295D /* BCLAnnotation.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -296,12 +301,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF7A1A741AF7ACAD0091DFF7 /* Build configuration list for PBXNativeTarget "BCLRemoteApp" */;
 			buildPhases = (
-				A4167EA327499F3735B077DF /* Check Pods Manifest.lock */,
+				A4167EA327499F3735B077DF /* [CP] Check Pods Manifest.lock */,
 				AF7A1A4A1AF7ACAD0091DFF7 /* Sources */,
 				AF7A1A4B1AF7ACAD0091DFF7 /* Frameworks */,
 				AF7A1A4C1AF7ACAD0091DFF7 /* Resources */,
-				030E5AAB9789D09E3D9A2C5F /* Copy Pods Resources */,
-				3B51988D0E0BDDE4D3538BF8 /* Embed Pods Frameworks */,
+				030E5AAB9789D09E3D9A2C5F /* [CP] Copy Pods Resources */,
+				3B51988D0E0BDDE4D3538BF8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -324,7 +329,7 @@
 				TargetAttributes = {
 					AF7A1A4D1AF7ACAD0091DFF7 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 8TQGM4U3PU;
+						DevelopmentTeam = WWKF65T5X4;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -373,14 +378,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		030E5AAB9789D09E3D9A2C5F /* Copy Pods Resources */ = {
+		030E5AAB9789D09E3D9A2C5F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,14 +393,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3B51988D0E0BDDE4D3538BF8 /* Embed Pods Frameworks */ = {
+		3B51988D0E0BDDE4D3538BF8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,14 +408,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BCLRemoteApp/Pods-BCLRemoteApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A4167EA327499F3735B077DF /* Check Pods Manifest.lock */ = {
+		A4167EA327499F3735B077DF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +448,7 @@
 				7503CD091B445E1A00949512 /* BCLLoginViewController.m in Sources */,
 				7503CCFD1B445D9A00949512 /* BCLNotificationSetupViewController.m in Sources */,
 				7503CCEF1B445D4400949512 /* BLCZonesViewController.m in Sources */,
+				BA4D1AD51DDE487200FA295D /* BCLAnnotation.m in Sources */,
 				7503CCFC1B445D9A00949512 /* BCLMapViewController.m in Sources */,
 				7503CD081B445E1A00949512 /* BCLContainerViewController.m in Sources */,
 				AF6E0DBC1B4D584300E07918 /* BCLSystemSettingsViewController.m in Sources */,
@@ -550,7 +556,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.upnext.beaconctrl;
 				PRODUCT_NAME = BCLRemoteApp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d07fdb34-def5-40b2-84e9-e2ce2bcc46d1";
 			};
 			name = Debug;
 		};
@@ -567,7 +573,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.upnext.beaconctrl;
 				PRODUCT_NAME = BCLRemoteApp;
-				PROVISIONING_PROFILE = "c72e83d0-15fc-487e-b9c1-f0c842337a97";
+				PROVISIONING_PROFILE = "d07fdb34-def5-40b2-84e9-e2ce2bcc46d1";
 			};
 			name = Release;
 		};

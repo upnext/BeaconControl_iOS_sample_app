@@ -516,7 +516,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
         if (beacon.zone.color) {
             image = [UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate];
         } else {
-            image = [UIImage imageNamed:beacon.needsFirmwareUpdate || beacon.needsFirmwareUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"];
+            image = [UIImage imageNamed:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"];
         }
 
         if (self.state == kBCLMapViewControllerStateNewBeacon) {

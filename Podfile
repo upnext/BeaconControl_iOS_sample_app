@@ -5,7 +5,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'BCLRemoteApp' do
 	pod "UNNetworking", :git => "https://github.com/upnext/UNNetworking.git", :branch => :master
-	pod 'Mapbox-iOS-SDK', '1.6.0'
+	pod 'Mapbox-iOS-SDK', :git => "https://github.com/OrdnanceSurvey/mapbox-ios-sdk.git", :branch => :release
 	pod 'BeaconCtrl', :git => "https://github.com/upnext/BeaconCtrl_iOS_SDK.git", :branch => :master
 	pod 'SSKeychain'
 	pod 'AKPickerView'

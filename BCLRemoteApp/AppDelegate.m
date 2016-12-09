@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import <BeaconCtrl/BCLBeaconCtrlAdmin.h>
 #import "BeaconCtrlManager.h"
-#import "RMConfiguration.h"
 #import "BCLSystemSettingsViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -28,8 +27,6 @@ NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotificati
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [[RMConfiguration sharedInstance] setAccessToken:@"pk.eyJ1IjoiYWNob2puYWNraSIsImEiOiJBNjFIdV8wIn0.Jm8FTlRfSHys8Og29_9WLg"];
-    
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
                                                                                          |UIRemoteNotificationTypeSound
                                                                                          |UIRemoteNotificationTypeAlert) categories:nil];

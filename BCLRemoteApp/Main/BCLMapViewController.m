@@ -18,8 +18,12 @@
 #import "UIViewController+BCLActivityIndicator.h"
 #import "UIViewController+MFSideMenuAdditions.h"
 #import "AppDelegate.h"
-#import <Mapbox-iOS-SDK/Mapbox.h>
+#import "BCLAnnotation.h"
+
 #import <MFSideMenu/MFSideMenuContainerViewController.h>
+
+@import Mapbox;
+
 
 typedef NS_ENUM(NSUInteger, BCLMapViewControllerState) {
     kBCLMapViewControllerStateNormal,
@@ -35,50 +39,46 @@ static CGFloat kBCLTransitionDuration = 0.5;
 static CGFloat kBCLExtendedBeaconDetailsViewHeight = 169.0;
 static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 
-@interface BCLMapViewController () <RMMapViewDelegate, UINavigationControllerDelegate, UIViewControllerAnimatedTransitioning, BCLBeaconDetailsViewControllerDelegate>
-@property (weak, nonatomic) IBOutlet RMMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIImageView *pinView;
-@property (weak, nonatomic) IBOutlet UIButton *addButton;
-@property (weak, nonatomic) IBOutlet UIButton *moveButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *beaconDetailsConstraint;
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsDistanceConstraint;
+@interface BCLMapViewController () <MGLMapViewDelegate, UINavigationControllerDelegate, UIViewControllerAnimatedTransitioning, BCLBeaconDetailsViewControllerDelegate>
+@property(strong) IBOutlet MGLMapView *mapView;
+@property(weak, nonatomic) IBOutlet UIView *mapViewContainer;
+@property(weak, nonatomic) IBOutlet UIImageView *pinView;
+@property(weak, nonatomic) IBOutlet UIButton *addButton;
+@property(weak, nonatomic) IBOutlet UIButton *moveButton;
+@property(weak, nonatomic) IBOutlet NSLayoutConstraint *beaconDetailsConstraint;
+@property(weak, nonatomic) IBOutlet UIView *containerView;
+@property(weak, nonatomic) IBOutlet NSLayoutConstraint *buttonsDistanceConstraint;
 
-@property (strong, nonatomic) BCLBeaconDetailsViewController *beaconDetailsViewController;
-@property (nonatomic) BCLMapViewControllerState state;
+@property(strong, nonatomic) BCLBeaconDetailsViewController *beaconDetailsViewController;
+@property(nonatomic) BCLMapViewControllerState state;
 
-@property (strong, nonatomic) NSSet *beacons;
+@property(strong, nonatomic) NSSet *beacons;
 
-@property (nonatomic, strong) BCLBeacon *currentlyAddedBeacon;
-@property (nonatomic, strong) BCLBeacon *currentlyEditedBeacon;
-@property (nonatomic, strong) BeaconCtrlManager *beaconCtrlManager;
+@property(nonatomic, strong) BCLBeacon *currentlyAddedBeacon;
+@property(nonatomic, strong) BCLBeacon *currentlyEditedBeacon;
+@property(nonatomic, strong) BeaconCtrlManager *beaconCtrlManager;
 
-@property (nonatomic, strong) NSArray *filteredZones;
-@property (nonatomic) BOOL showsNoneZone;
-@property (nonatomic) NSNumber *floor;
+@property(nonatomic, strong) NSArray *filteredZones;
+@property(nonatomic) BOOL showsNoneZone;
+@property(nonatomic) NSNumber *floor;
 @property(nonatomic) BOOL needsReload;
 @property(nonatomic) BOOL didVerifySystemSettings;
 @end
 
 @implementation BCLMapViewController
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - UIViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
-    // map view configuration
-    RMMapboxSource *tileSource = [[RMMapboxSource alloc] initWithMapID:@"achojnacki.941d2079"];
-    [self.mapView addTileSource:tileSource];
-    self.mapView.showsUserLocation = YES;
-    self.mapView.userTrackingMode = RMUserTrackingModeFollow;
     self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
+    self.mapView.userTrackingMode = MGLUserTrackingModeFollow;
 
     //initial views setup
     self.state = kBCLMapViewControllerStateNormal;
@@ -91,7 +91,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     layer.shadowOpacity = 0.3;
     layer.shadowRadius = 5.0;
 
-    self.mapView.zoom = 18;
+    self.mapView.zoomLevel = 0;
     self.showsNoneZone = YES;
     self.floor = nil;
 
@@ -99,8 +99,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     [self reloadBeacons];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!self.didVerifySystemSettings) {
         AppDelegate *delegate = [UIApplication sharedApplication].delegate;
@@ -109,8 +108,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     }
 }
 
-- (void)setNeedsReload
-{
+- (void)setNeedsReload {
     __weak BCLMapViewController *weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         if (weakSelf.state == kBCLMapViewControllerStateNormal) {
@@ -121,8 +119,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     });
 }
 
-- (void)reloadConfiguration
-{
+- (void)reloadConfiguration {
     if (self.filteredZones) {
         NSMutableArray *newFilteredZones = [NSMutableArray new];
         for (BCLZone *zone in [BeaconCtrlManager sharedManager].beaconCtrl.configuration.zones) {
@@ -138,25 +135,24 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     [self reloadBeacons];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     self.menuContainerViewController.panMode = MFSideMenuPanModeDefault;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     self.menuContainerViewController.panMode = MFSideMenuPanModeNone;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
+- (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleDefault;
 }
 
 
-- (RMAnnotation *)addAnnotationForBeacon:(BCLBeacon *)beacon
-{
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView coordinate:beacon.location.location.coordinate andTitle:nil];
+- (BCLAnnotation *)addAnnotationForBeacon:(BCLBeacon *)beacon {
+
+    BCLAnnotation *annotation = [BCLAnnotation new];
+    annotation.reuseIdentifier = [NSString stringWithFormat:@"annotationWithBeaconId_%@", beacon.instanceId];
+    annotation.coordinate = beacon.location.location.coordinate;
     annotation.userInfo = beacon;
     [self.mapView addAnnotation:annotation];
 
@@ -165,39 +161,37 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 
 #pragma mark - Private
 
-- (void)clearBeacons
-{
-    [self.mapView removeAllAnnotations];
+- (void)clearBeacons {
+    [self.mapView removeAnnotations:self.mapView.annotations];
 }
 
-- (void)reloadBeacons
-{
+- (void)reloadBeacons {
     self.needsReload = NO;
     __weak BCLMapViewController *weakSelf = self;
     [self setState:kBCLMapViewControllerStateNormal animated:NO completion:^(BOOL finished) {
         [weakSelf clearBeacons];
-        weakSelf.beacons = self.beaconCtrlManager.beaconCtrl.configuration.beacons;
-        if (!self.filteredZones) {
-            for (BCLBeacon *beacon in self.beacons) {
-                if ([self beaconsOnCurrentFloor:beacon] && (self.showsNoneZone || beacon.zone)) {
-                    RMAnnotation *annotation = [self addAnnotationForBeacon:beacon];
-                    [self selectAnnotationIfNecessary:annotation];
+        weakSelf.beacons = weakSelf.beaconCtrlManager.beaconCtrl.configuration.beacons;
+        if (!weakSelf.filteredZones) {
+            for (BCLBeacon *beacon in weakSelf.beacons) {
+                if ([weakSelf beaconsOnCurrentFloor:beacon] && (weakSelf.showsNoneZone || beacon.zone)) {
+                    BCLAnnotation *annotation = [weakSelf addAnnotationForBeacon:beacon];
+                    [weakSelf selectAnnotationIfNecessary:annotation];
                 }
             }
         } else {
-            for (BCLZone *zone in self.filteredZones) {
+            for (BCLZone *zone in weakSelf.filteredZones) {
                 for (BCLBeacon *beacon in zone.beacons) {
-                    if ([self beaconsOnCurrentFloor:beacon]) {
-                        RMAnnotation *annotation = [self addAnnotationForBeacon:beacon];
-                        [self selectAnnotationIfNecessary:annotation];
+                    if ([weakSelf beaconsOnCurrentFloor:beacon]) {
+                        BCLAnnotation *annotation = [weakSelf addAnnotationForBeacon:beacon];
+                        [weakSelf selectAnnotationIfNecessary:annotation];
                     }
                 }
             }
-            if (self.showsNoneZone) {
-                for (BCLBeacon * beacon in self.beacons) {
-                    if (!beacon.zone && [self beaconsOnCurrentFloor:beacon]) {
-                        RMAnnotation *annotation = [self addAnnotationForBeacon:beacon];
-                        [self selectAnnotationIfNecessary:annotation];
+            if (weakSelf.showsNoneZone) {
+                for (BCLBeacon *beacon in weakSelf.beacons) {
+                    if (!beacon.zone && [weakSelf beaconsOnCurrentFloor:beacon]) {
+                        BCLAnnotation *annotation = [weakSelf addAnnotationForBeacon:beacon];
+                        [weakSelf selectAnnotationIfNecessary:annotation];
                     }
                 }
             }
@@ -205,34 +199,30 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     }];
 }
 
-- (void)selectAnnotationIfNecessary:(RMAnnotation *)annotation
-{
+- (void)selectAnnotationIfNecessary:(BCLAnnotation *)annotation {
     BCLBeacon *beacon = annotation.userInfo;
     if ([beacon.beaconIdentifier isEqualToString:self.currentlyEditedBeacon.beaconIdentifier]) {
         [self.mapView selectAnnotation:annotation animated:NO];
     }
 }
 
-- (BOOL)beaconsOnCurrentFloor:(BCLBeacon *)beacon
-{
+- (BOOL)beaconsOnCurrentFloor:(BCLBeacon *)beacon {
     if (!self.floor) {
         return YES;
     }
-    
+
     if ([self.floor isEqualToNumber:@(NSNotFound)]) {
         return beacon.location.floor == nil;
     }
-    
+
     return [beacon.location.floor isEqualToNumber:self.floor];
 }
 
-- (void)centerCurrentlySelectedAnnotationAnimated:(BOOL)animated
-{
-    CGPoint pinPoint = [self.mapView convertPoint:self.pinView.center fromView:self.view];
-    CLLocationCoordinate2D coordinate2D = [self.mapView pixelToCoordinate:pinPoint];
+- (void)centerCurrentlySelectedAnnotationAnimated:(BOOL)animated {
+    CLLocationCoordinate2D coordinate2D = [self.mapView convertPoint:self.pinView.center toCoordinateFromView:self.view];
     CLLocationDegrees latDelta = coordinate2D.latitude - self.mapView.centerCoordinate.latitude;
 
-    CLLocationCoordinate2D centerCoordinate = self.mapView.selectedAnnotation.coordinate;
+    CLLocationCoordinate2D centerCoordinate = self.mapView.selectedAnnotations[0].coordinate;
     centerCoordinate.latitude = centerCoordinate.latitude - latDelta;
 
     //don't do anything if mapview already centered
@@ -254,13 +244,13 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
     __weak BCLMapViewController *weakSelf = self;
 
     switch (self.state) {
-        case kBCLMapViewControllerStateNormal:break;
+        case kBCLMapViewControllerStateNormal:
+            break;
 
-        case kBCLMapViewControllerStateBeaconSelected:
-        {
+        case kBCLMapViewControllerStateBeaconSelected: {
             [self centerCurrentlySelectedAnnotationAnimated:NO];
             [self setState:kBCLMapViewControllerStateNewBeacon animated:NO completion:^(BOOL finished) {
-                [weakSelf.mapView removeAnnotation:weakSelf.mapView.selectedAnnotation];
+                [weakSelf.mapView removeAnnotation:weakSelf.mapView.selectedAnnotations[0]];
             }];
         };
             break;
@@ -273,30 +263,27 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
                 [self setState:kBCLMapViewControllerStateNormal animated:YES];
             }
             break;
-        case kBCLMapViewControllerStateShowsBeaconDetails:break;
+        case kBCLMapViewControllerStateShowsBeaconDetails:
+            break;
     }
 }
 
-- (IBAction)addButtonPressed:(id)sender
-{
+- (IBAction)addButtonPressed:(id)sender {
     switch (self.state) {
 
-        case kBCLMapViewControllerStateNormal:
-        {
+        case kBCLMapViewControllerStateNormal: {
             [self setState:kBCLMapViewControllerStateNewBeacon animated:YES];
         }
             break;
 
-        case kBCLMapViewControllerStateBeaconSelected:
-        {
+        case kBCLMapViewControllerStateBeaconSelected: {
             [self.navigationController pushViewController:self.beaconDetailsViewController animated:YES];
         };
             break;
 
-        case kBCLMapViewControllerStateNewBeacon:
-        {
+        case kBCLMapViewControllerStateNewBeacon: {
             CGPoint pinPoint = [self.mapView convertPoint:self.pinView.center fromView:self.view];
-            CLLocationCoordinate2D coordinate2D = [self.mapView pixelToCoordinate:pinPoint];
+            CLLocationCoordinate2D coordinate2D = [self.mapView convertPoint:pinPoint toCoordinateFromView:self.mapView];
             CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate2D.latitude longitude:coordinate2D.longitude];
 
             if (self.currentlyEditedBeacon) {
@@ -311,7 +298,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
                         [weakSelf hideActivityIndicatorViewAnimated:YES];
                         if (!error) {
                             weakSelf.currentlyEditedBeacon = updatedBeacon;
-                            RMAnnotation *annotation = weakSelf.mapView.selectedAnnotation;
+                            BCLAnnotation *annotation = weakSelf.mapView.selectedAnnotations[0];
                             annotation.coordinate = updatedBeacon.location.location.coordinate;
                             annotation.userInfo = updatedBeacon;
                             [self setState:kBCLMapViewControllerStateBeaconSelected animated:YES];
@@ -337,8 +324,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
         }
             break;
 
-        case kBCLMapViewControllerStateShowsBeaconDetails:
-        {
+        case kBCLMapViewControllerStateShowsBeaconDetails: {
 
         };
             break;
@@ -347,200 +333,203 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 
 #pragma mark - Accessors
 
-- (void)setState:(enum BCLMapViewControllerState)state animated:(BOOL)animated completion:(void(^)(BOOL))completion
-{
+- (void)setState:(enum BCLMapViewControllerState)state animated:(BOOL)animated completion:(void (^)(BOOL))completion {
     _state = state;
-    [UIView animateWithDuration:animated?kBCLTransitionDuration:0.0
+    [UIView animateWithDuration:animated ? kBCLTransitionDuration : 0.0
                           delay:0.0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-        switch (state) {
-            case kBCLMapViewControllerStateNormal:
-            {
-                self.beaconDetailsConstraint.constant = kBCLHiddenBeaconDetailsViewHeight;
-                [self.addButton setImage:[UIImage imageNamed:@"plus_mapbtn"] forState:UIControlStateNormal];
-                self.addButton.transform = CGAffineTransformIdentity;
-                self.pinView.hidden = YES;
-                self.buttonsDistanceConstraint.constant = 0.0;
-            };
-                break;
-            case kBCLMapViewControllerStateBeaconSelected:
-            {
-                [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
-                if (!self.pinView.hidden && self.currentlyEditedBeacon) {
-                    [self.mapView addAnnotation:self.mapView.selectedAnnotation];
-                }
+                         switch (state) {
+                             case kBCLMapViewControllerStateNormal: {
+                                 self.beaconDetailsConstraint.constant = kBCLHiddenBeaconDetailsViewHeight;
+                                 [self.addButton setImage:[UIImage imageNamed:@"plus_mapbtn"] forState:UIControlStateNormal];
+                                 self.addButton.transform = CGAffineTransformIdentity;
+                                 self.pinView.hidden = YES;
+                                 self.buttonsDistanceConstraint.constant = 0.0;
+                             };
+                                 break;
+                             case kBCLMapViewControllerStateBeaconSelected: {
+                                 [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
+                                 if (!self.pinView.hidden && self.currentlyEditedBeacon) {
+                                     [self.mapView addAnnotation:self.mapView.selectedAnnotations[0]];
+                                 }
 
-                self.beaconDetailsConstraint.constant = kBCLExtendedBeaconDetailsViewHeight;
-                [self.addButton setImage:[UIImage imageNamed:@"settings_mapbtn"] forState:UIControlStateNormal];
-                [self.moveButton setImage:[UIImage imageNamed:@"move_mapbtn"] forState:UIControlStateNormal];
-                self.addButton.transform = CGAffineTransformIdentity;
-                self.pinView.hidden = YES;
-                self.buttonsDistanceConstraint.constant = 65.0;
+                                 self.beaconDetailsConstraint.constant = kBCLExtendedBeaconDetailsViewHeight;
+                                 [self.addButton setImage:[UIImage imageNamed:@"settings_mapbtn"] forState:UIControlStateNormal];
+                                 [self.moveButton setImage:[UIImage imageNamed:@"move_mapbtn"] forState:UIControlStateNormal];
+                                 self.addButton.transform = CGAffineTransformIdentity;
+                                 self.pinView.hidden = YES;
+                                 self.buttonsDistanceConstraint.constant = 65.0;
 
-                //center & select annotation
-                RMAnnotation *annotation = self.mapView.selectedAnnotation;
-                self.currentlyEditedBeacon = (BCLBeacon *)annotation.userInfo;;
-                [self centerCurrentlySelectedAnnotationAnimated:YES];
-                BCLBeacon *beacon = annotation.userInfo;
-                if (beacon.zone) {
-                    annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:YES needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
-                } else {
-                    annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"beaconWithoutZonePressed"]];
-                }
-            };
-                break;
-            case kBCLMapViewControllerStateNewBeacon:
-            {
-                [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
-                if (self.currentlyEditedBeacon) {
-                    [self.addButton setImage:[UIImage imageNamed:@"ok_mapbtn"] forState:UIControlStateNormal];
-                } else {
-                    [self.addButton setImage:[UIImage imageNamed:@"arrow_mapbtn"] forState:UIControlStateNormal];
-                }
-                [self.moveButton setImage:[UIImage imageNamed:@"cancel_mapbtn"] forState:UIControlStateNormal];
-                self.beaconDetailsConstraint.constant = kBCLExtendedBeaconDetailsViewHeight;
-                self.addButton.transform = CGAffineTransformIdentity;
-                self.buttonsDistanceConstraint.constant = 65.0;
-            };
-                break;
-            case kBCLMapViewControllerStateShowsBeaconDetails: {
-                [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
-                self.beaconDetailsConstraint.constant = self.view.bounds.size.height;
-                self.addButton.transform = CGAffineTransformMakeRotation(3*M_PI_2);
-                self.buttonsDistanceConstraint.constant = 0.0;
-            };
-                break;
-        }
+                                 //center & select annotation
+                                 BCLAnnotation *annotation = self.mapView.selectedAnnotations[0];
+                                 BCLBeacon *beacon = annotation.userInfo;
 
-        [self.view layoutIfNeeded];
-    } completion:^(BOOL finished){
-        //check if state wasn't changed before animation completion
-        if (state == _state && finished) {
-            switch (state) {
-                case kBCLMapViewControllerStateNormal:
-                    [self.beaconCtrlManager unmuteAutomaticBeaconCtrlConfigurationRefresh];
-                    self.currentlyAddedBeacon = nil;
-                    self.currentlyEditedBeacon = nil;
-                    self.beaconDetailsViewController.view.userInteractionEnabled = NO;
-                    self.beaconDetailsViewController.beaconMode = kBCLBeaconModeHidden;
-                    if (self.needsReload) {
-                        [self reloadConfiguration];
+                                 self.currentlyEditedBeacon = (BCLBeacon *) annotation.userInfo;;
+                                 [self centerCurrentlySelectedAnnotationAnimated:YES];
+
+                                 UIImage *image;
+                                 if (beacon.zone) {
+                                     image = [UIImage beaconMarkerWithColor:beacon.zone.color highlighted:YES needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate];
+                                 } else {
+                                     image = [UIImage imageNamed:@"beaconWithoutZonePressed"];
+                                 }
+                                 MGLAnnotationImage *annotationImage = [self.mapView dequeueReusableAnnotationImageWithIdentifier:annotation.reuseIdentifier];
+                                 annotationImage.image = image;
+                             };
+                                 break;
+                             case kBCLMapViewControllerStateNewBeacon: {
+                                 [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
+                                 if (self.currentlyEditedBeacon) {
+                                     [self.addButton setImage:[UIImage imageNamed:@"ok_mapbtn"] forState:UIControlStateNormal];
+                                 } else {
+                                     [self.addButton setImage:[UIImage imageNamed:@"arrow_mapbtn"] forState:UIControlStateNormal];
+                                 }
+                                 [self.moveButton setImage:[UIImage imageNamed:@"cancel_mapbtn"] forState:UIControlStateNormal];
+                                 self.beaconDetailsConstraint.constant = kBCLExtendedBeaconDetailsViewHeight;
+                                 self.addButton.transform = CGAffineTransformIdentity;
+                                 self.buttonsDistanceConstraint.constant = 65.0;
+                             };
+                                 break;
+                             case kBCLMapViewControllerStateShowsBeaconDetails: {
+                                 [self.beaconCtrlManager muteAutomaticBeaconCtrlConfigurationRefresh];
+                                 self.beaconDetailsConstraint.constant = self.view.bounds.size.height;
+                                 self.addButton.transform = CGAffineTransformMakeRotation(3 * M_PI_2);
+                                 self.buttonsDistanceConstraint.constant = 0.0;
+                             };
+                                 break;
+                         }
+
+                         [self.view layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                //check if state wasn't changed before animation completion
+                if (state == _state && finished) {
+                    switch (state) {
+                        case kBCLMapViewControllerStateNormal:
+                            [self.beaconCtrlManager unmuteAutomaticBeaconCtrlConfigurationRefresh];
+                            self.currentlyAddedBeacon = nil;
+                            self.currentlyEditedBeacon = nil;
+                            self.beaconDetailsViewController.view.userInteractionEnabled = NO;
+                            self.beaconDetailsViewController.beaconMode = kBCLBeaconModeHidden;
+                            if (self.needsReload) {
+                                [self reloadConfiguration];
+                            }
+                            break;
+                        case kBCLMapViewControllerStateBeaconSelected:
+                            self.beaconDetailsViewController.view.userInteractionEnabled = NO;
+                            self.beaconDetailsViewController.beaconMode = kBCLBeaconModeDetails;
+                            break;
+                        case kBCLMapViewControllerStateNewBeacon:
+                            self.beaconDetailsViewController.view.userInteractionEnabled = NO;
+                            self.pinView.hidden = NO;
+                            self.beaconDetailsViewController.beaconMode = kBCLBeaconModeNew;
+                            break;
+                        case kBCLMapViewControllerStateShowsBeaconDetails:
+                            self.beaconDetailsViewController.view.userInteractionEnabled = YES;
+                            break;
                     }
-                    break;
-                case kBCLMapViewControllerStateBeaconSelected:
-                    self.beaconDetailsViewController.view.userInteractionEnabled = NO;
-                    self.beaconDetailsViewController.beaconMode = kBCLBeaconModeDetails;
-                    break;
-                case kBCLMapViewControllerStateNewBeacon:
-                    self.beaconDetailsViewController.view.userInteractionEnabled = NO;
-                    self.pinView.hidden = NO;
-                    self.beaconDetailsViewController.beaconMode = kBCLBeaconModeNew;
-                    break;
-                case kBCLMapViewControllerStateShowsBeaconDetails:
-                    self.beaconDetailsViewController.view.userInteractionEnabled = YES;
-                    break;
-            }
-        }
-        if (completion) {
-            completion(finished);
-        }
-    }];
+                }
+                if (completion) {
+                    completion(finished);
+                }
+            }];
 }
 
-- (void)setState:(BCLMapViewControllerState)state animated:(BOOL)animated
-{
+- (void)setState:(BCLMapViewControllerState)state animated:(BOOL)animated {
     [self setState:state animated:animated completion:nil];
 }
 
-- (void)setState:(BCLMapViewControllerState)state
-{
+- (void)setState:(BCLMapViewControllerState)state {
     [self setState:state animated:NO];
 }
 
-- (void)setCurrentlyAddedBeacon:(BCLBeacon *)currentlyAddedBeacon
-{
+- (void)setCurrentlyAddedBeacon:(BCLBeacon *)currentlyAddedBeacon {
     _currentlyAddedBeacon = currentlyAddedBeacon;
     _currentlyEditedBeacon = nil;
     self.beaconDetailsViewController.beacon = currentlyAddedBeacon;
     self.beaconDetailsViewController.beaconMode = kBCLBeaconModeNew;
 }
 
-- (void)setCurrentlyEditedBeacon:(BCLBeacon *)currentlyEditedBeacon
-{
+- (void)setCurrentlyEditedBeacon:(BCLBeacon *)currentlyEditedBeacon {
     _currentlyEditedBeacon = currentlyEditedBeacon;
     _currentlyAddedBeacon = nil;
     self.beaconDetailsViewController.beacon = currentlyEditedBeacon;
     self.beaconDetailsViewController.beaconMode = kBCLBeaconModeDetails;
 }
 
-- (BeaconCtrlManager *)beaconCtrlManager
-{
+- (BeaconCtrlManager *)beaconCtrlManager {
     return [BeaconCtrlManager sharedManager];
 }
 
 #pragma mark Side Menu Delegate
 
-- (void)sideMenuViewController:(BCLSideMenuViewController *)controller didChangeSelection:(NSArray *)selection showsNoneZone:(BOOL)showsNone
-{
+- (void)sideMenuViewController:(BCLSideMenuViewController *)controller didChangeSelection:(NSArray *)selection showsNoneZone:(BOOL)showsNone {
     self.filteredZones = selection;
     self.showsNoneZone = showsNone;
     [self reloadBeacons];
 }
 
-- (void)sideMenuViewController:(BCLSideMenuViewController *)controller didSelectFloorNumber:(NSNumber *)floorNumber
-{
+- (void)sideMenuViewController:(BCLSideMenuViewController *)controller didSelectFloorNumber:(NSNumber *)floorNumber {
     self.floor = floorNumber;
     [self reloadBeacons];
 }
 
 #pragma mark MapView Delegate
 
-- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
-{
-    if (annotation.isUserLocationAnnotation)
-        return nil;
+- (nullable MGLAnnotationImage *)mapView:(nonnull MGLMapView *)mapView imageForAnnotation:(nonnull id <MGLAnnotation>)annotation {
 
-    BCLBeacon *beacon = annotation.userInfo;
-    
-    RMMarker *marker;
-    if (annotation == mapView.selectedAnnotation) {
-        marker = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:[UIColor redColor] highlighted:NO needsUpdate:YES]];
+    if (![annotation isKindOfClass:[BCLAnnotation class]]) {
+        return nil;
+    }
+
+    BCLAnnotation *bclAnnotation = (BCLAnnotation *) annotation;
+    BCLBeacon *beacon = bclAnnotation.userInfo;
+
+    UIImage *image;
+
+    if (mapView.selectedAnnotations.count > 0 && bclAnnotation == [mapView.selectedAnnotations objectAtIndex:0]) {
+        image = [UIImage beaconMarkerWithColor:[UIColor redColor] highlighted:NO needsUpdate:YES];
     } else {
         if (beacon.zone.color) {
-            marker = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
+            image = [UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate];
         } else {
-            marker = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:beacon.needsFirmwareUpdate || beacon.needsCharacteristicsUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"]];
+            image = [UIImage imageNamed:beacon.needsFirmwareUpdate || beacon.needsCharacteristicsUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"];
         }
     }
-    return marker;
+
+    return [MGLAnnotationImage annotationImageWithImage:image reuseIdentifier:bclAnnotation.reuseIdentifier];
 }
 
-- (void)mapView:(RMMapView *)mapView didSelectAnnotation:(RMAnnotation *)annotation
-{
-    if (![annotation isKindOfClass:[RMUserLocation class]]) {
+- (void)mapView:(nonnull MGLMapView *)mapView didSelectAnnotation:(nonnull id <MGLAnnotation>)annotation {
+    if ([annotation isKindOfClass:[BCLAnnotation class]]) {
         [self setState:kBCLMapViewControllerStateBeaconSelected animated:YES];
     }
 }
 
-- (void)mapView:(RMMapView *)mapView didDeselectAnnotation:(RMAnnotation *)annotation
-{
-    if (![annotation isKindOfClass:[RMUserLocation class]]) {
-        BCLBeacon *beacon = annotation.userInfo;
+- (void)mapView:(nonnull MGLMapView *)mapView didDeselectAnnotation:(nonnull id <MGLAnnotation>)annotation {
+
+    if ([annotation isKindOfClass:[BCLAnnotation class]]) {
+        BCLAnnotation *bclAnnotation = (BCLAnnotation *) annotation;
+        BCLBeacon *beacon = bclAnnotation.userInfo;
+        UIImage *image;
+
         if (beacon.zone.color) {
-            annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate]];
+            image = [UIImage beaconMarkerWithColor:beacon.zone.color highlighted:NO needsUpdate:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate];
         } else {
-            annotation.layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:beacon.needsFirmwareUpdate || beacon.needsFirmwareUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"]];
+            image = [UIImage imageNamed:beacon.needsCharacteristicsUpdate || beacon.needsFirmwareUpdate ? @"beaconWithoutZoneRed" : @"beaconWithoutZone"];
         }
 
         if (self.state == kBCLMapViewControllerStateNewBeacon) {
             [self.mapView addAnnotation:annotation];
+        } else {
+            MGLAnnotationImage *annotationImage = [self.mapView dequeueReusableAnnotationImageWithIdentifier:bclAnnotation.reuseIdentifier];
+            annotationImage.image = image;
+
         }
 
         [self setState:kBCLMapViewControllerStateNormal animated:YES];
     }
 }
-
 
 #pragma mark - Navigation
 
@@ -548,7 +537,7 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:kBCLBeaconDetailsSegueIdentifier]) {
         BCLBeaconDetailsViewController *viewController = segue.destinationViewController;
-        viewController.beacon = (BCLBeacon *)sender;
+        viewController.beacon = (BCLBeacon *) sender;
         viewController.delegate = self;
     } else if ([segue.identifier isEqualToString:kBCLEmbedBeaconDetailsSegueIdentifier]) {
         self.beaconDetailsViewController = segue.destinationViewController;
@@ -559,9 +548,8 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 
 #pragma mark - UINavigationController Delegate
 
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
-{
-    if (([toVC isKindOfClass:[BCLBeaconDetailsViewController class]] && fromVC == self) || ([fromVC isKindOfClass:[BCLBeaconDetailsViewController class]] && toVC == self)){
+- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    if (([toVC isKindOfClass:[BCLBeaconDetailsViewController class]] && fromVC == self) || ([fromVC isKindOfClass:[BCLBeaconDetailsViewController class]] && toVC == self)) {
         return self;
     }
     return nil;
@@ -569,21 +557,19 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 
 #pragma mark - Animated Transitioning
 
-- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext
-{
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
     return kBCLTransitionDuration;
 }
 
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
-{
+- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
     __weak BCLMapViewController *weakSelf = self;
     //disable interactions during transition
     self.view.userInteractionEnabled = NO;
-    void(^completion)(BOOL finished) = ^(BOOL finished){
+    void (^completion)(BOOL finished) = ^(BOOL finished) {
         weakSelf.view.userInteractionEnabled = YES;
     };
 
-    UIViewController* toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     if ([toViewController isKindOfClass:[BCLBeaconDetailsViewController class]]) {
         [self setState:kBCLMapViewControllerStateShowsBeaconDetails animated:YES completion:^(BOOL finished) {
             [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
@@ -609,31 +595,26 @@ static CGFloat kBCLHiddenBeaconDetailsViewHeight = 63.0;
 
 #pragma mark - Beacon Details View Delegate
 
-- (void)beaconDetailsViewController:(BCLBeaconDetailsViewController *)viewController didSaveNewBeacon:(BCLBeacon *)beacon
-{
-    //self.currentlyAddedBeacon = nil;
-    RMAnnotation *annotation = [RMAnnotation annotationWithMapView:self.mapView coordinate:beacon.location.location.coordinate andTitle:nil];
-    annotation.userInfo = beacon;
-    [self.mapView addAnnotation:annotation];
-    [self.mapView setSelectedAnnotation:annotation];
+- (void)beaconDetailsViewController:(BCLBeaconDetailsViewController *)viewController didSaveNewBeacon:(BCLBeacon *)beacon {
+
+    BCLAnnotation *annotation = [self addAnnotationForBeacon:beacon];
+    [self.mapView selectAnnotation:annotation animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)beaconDetailsViewController:(BCLBeaconDetailsViewController *)viewController didEditBeacon:(BCLBeacon *)beacon
-{
-    //self.currentlyEditedBeacon = nil;
-    RMAnnotation *annotation = self.mapView.selectedAnnotation;
+- (void)beaconDetailsViewController:(BCLBeaconDetailsViewController *)viewController didEditBeacon:(BCLBeacon *)beacon {
+    BCLAnnotation *annotation = self.mapView.selectedAnnotations[0];
     annotation.userInfo = beacon;
     annotation.coordinate = beacon.location.location.coordinate;
+    annotation.reuseIdentifier = [NSString stringWithFormat:@"annotationWithBeaconId_%@", beacon.instanceId];
     [self.mapView addAnnotation:annotation];
-    [self.mapView setSelectedAnnotation:annotation];
+    [self.mapView selectAnnotation:annotation animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)beaconDetailsViewController:(BCLBeaconDetailsViewController *)controller didDeleteBeacon:(BCLBeacon *)beacon
-{
+- (void)beaconDetailsViewController:(BCLBeaconDetailsViewController *)controller didDeleteBeacon:(BCLBeacon *)beacon {
     self.currentlyEditedBeacon = nil;
-    RMAnnotation *annotation = self.mapView.selectedAnnotation;
+    BCLAnnotation *annotation = self.mapView.selectedAnnotations[0];
     [self.mapView removeAnnotation:annotation];
     [self.mapView deselectAnnotation:annotation animated:NO];
     [self.navigationController popViewControllerAnimated:YES];

@@ -16,10 +16,12 @@
 #import "BCLSystemSettingsViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
+@import UserNotifications;
+
 NSString * const BCLApplicationDidRegisterForRemoteNotificationsNotification = @"BCLApplicationDidRegisterForRemoteNotificationsNotification";
 NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotification = @"BCLApplicationDidFailToRegisterForRemoteNotificationsNotification";
 
-@interface AppDelegate () <CLLocationManagerDelegate>
+@interface AppDelegate () <CLLocationManagerDelegate, UNUserNotificationCenterDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
@@ -30,11 +32,17 @@ NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotificati
     // Override point for customization after application launch.
     [[RMConfiguration sharedInstance] setAccessToken:@"pk.eyJ1IjoiYWNob2puYWNraSIsImEiOiJBNjFIdV8wIn0.Jm8FTlRfSHys8Og29_9WLg"];
     
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                         |UIRemoteNotificationTypeSound
-                                                                                         |UIRemoteNotificationTypeAlert) categories:nil];
-
-    [application registerUserNotificationSettings:settings];
+    if ([UNUserNotificationCenter class]) {
+        UNUserNotificationCenter *center = UNUserNotificationCenter.currentNotificationCenter;
+        [center requestAuthorizationWithOptions:UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            center.delegate = self;
+        }];
+    } else {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                             |UIRemoteNotificationTypeSound
+                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
 
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
@@ -150,6 +158,11 @@ NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotificati
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     [[BeaconCtrlManager sharedManager].beaconCtrl handleNotification:userInfo error:nil];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    [[BeaconCtrlManager sharedManager].beaconCtrl handleNotification:response.notification.request.content.userInfo error:nil];
 }
 
 @end

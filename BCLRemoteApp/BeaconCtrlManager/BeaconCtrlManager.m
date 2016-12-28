@@ -14,7 +14,7 @@
 #import <BeaconCtrl/BCLBeaconCtrl.h>
 #import <BeaconCtrl/BCLBeacon.h>
 #import <BeaconCtrl/BCLTrigger.h>
-#import <SSKeychain/SSKeychain.h>
+#import <SAMKeychain/SAMKeychain.h>
 
 NSString * const BeaconManagerReadyForSetupNotification = @"BeaconManagerReadyForSetupNotification";
 NSString * const BeaconManagerDidLogoutNotification = @"BeaconManagerDidLogoutpNotification";
@@ -335,7 +335,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
     self.beaconCtrlAdmin = nil;
     
     if ([self emailFromKeyChain]) {
-        [SSKeychain deletePasswordForService:[self keychainServiceName] account:[self emailFromKeyChain]];
+        [SAMKeychain deletePasswordForService:[self keychainServiceName] account:[self emailFromKeyChain]];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BeaconManagerDidLogoutNotification object:self];
@@ -485,7 +485,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
 
 - (NSDictionary *)keychainAccountDictionary
 {
-    return [[SSKeychain accountsForService:[self keychainServiceName]] lastObject];
+    return [[SAMKeychain accountsForService:[self keychainServiceName]] lastObject];
 }
 
 - (NSString *)emailFromKeyChain
@@ -493,7 +493,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
     NSDictionary *keychainAccountDict = [self keychainAccountDictionary];
     
     if (keychainAccountDict) {
-        return keychainAccountDict[kSSKeychainAccountKey];
+        return keychainAccountDict[kSAMKeychainAccountKey];
     }
     
     return nil;
@@ -501,7 +501,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
 
 - (NSString *)passwordFromKeychain
 {
-    return [SSKeychain passwordForService:[self keychainServiceName] account:[self emailFromKeyChain]];;
+    return [SAMKeychain passwordForService:[self keychainServiceName] account:[self emailFromKeyChain]];;
 }
 
 - (void)didRegisterForRemoteNotifications:(NSNotification *)notification
@@ -559,7 +559,7 @@ NSString * const BeaconManagerFirmwareUpdateDidFinishNotification = @"BeaconMana
                         
                         [beaconCtrl startMonitoringBeacons];
                         
-                        [SSKeychain setPassword:password forService:[self keychainServiceName] account:email];
+                        [SAMKeychain setPassword:password forService:[self keychainServiceName] account:email];
                         
                         weakSelf.refetchConfigurationTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:weakSelf selector:@selector(refetchBeaconCtrlConfigurationTimerHandler:) userInfo:nil repeats:YES];
                         

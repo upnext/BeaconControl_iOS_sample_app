@@ -32,17 +32,12 @@ NSString * const BCLApplicationDidFailToRegisterForRemoteNotificationsNotificati
     // Override point for customization after application launch.
     [[RMConfiguration sharedInstance] setAccessToken:@"pk.eyJ1IjoiYWNob2puYWNraSIsImEiOiJBNjFIdV8wIn0.Jm8FTlRfSHys8Og29_9WLg"];
     
-    if ([UNUserNotificationCenter class]) {
-        UNUserNotificationCenter *center = UNUserNotificationCenter.currentNotificationCenter;
-        [center requestAuthorizationWithOptions:UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound completionHandler:^(BOOL granted, NSError * _Nullable error) {
-            center.delegate = self;
-        }];
-    } else {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                             |UIRemoteNotificationTypeSound
-                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
-        [application registerUserNotificationSettings:settings];
-    }
+    UNUserNotificationCenter *center = UNUserNotificationCenter.currentNotificationCenter;
+    center.delegate = self;
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                        |UIRemoteNotificationTypeSound
+                                                                                        |UIRemoteNotificationTypeAlert) categories:nil];
+    [application registerUserNotificationSettings:settings];
 
     self.locationManager = [CLLocationManager new];
     self.locationManager.delegate = self;
